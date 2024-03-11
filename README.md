@@ -1,6 +1,6 @@
 # Název mého projektu, programu, hry...
 
-## Téma
+## Monopoly
 
 Tady bude krátký a úderný popis o účelu, významu, funkcionalitě...
 
