@@ -2,7 +2,7 @@
 
 ## Téma
 
-Tady bude krátký a úderný popis o účelu, významu, funkcionalitě...
+Jde o klasickou hru Monopoly, kterou všichni známe.
 
 ## Odkazy pro vývoj
 
