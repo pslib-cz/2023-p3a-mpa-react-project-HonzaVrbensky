@@ -14,7 +14,6 @@ export enum SpaceType {
     TAX = "TAX",
 }
 
-
 export interface Property {
     type: SpaceType.PROPERTY;
     id: number;
@@ -28,13 +27,13 @@ export interface Property {
 export interface Chance {
     type: SpaceType.CHANCE;
     id: number;
-    name: string;
+    text: string;
 }
 
 export interface CommunityChest {
     type: SpaceType.COMMUNITY_CHEST;
     id: number;
-    name: string;
+    text: string;
 }
 
 export interface Go {
