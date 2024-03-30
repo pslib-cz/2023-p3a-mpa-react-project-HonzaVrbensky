@@ -60,5 +60,7 @@ export interface Tax {
     name: string;
     amount: number;
 }
-
 export type Space = Property | Chance | CommunityChest | Go | Jail | FreeParking | Tax;
+
+
+export default GameBoard;
