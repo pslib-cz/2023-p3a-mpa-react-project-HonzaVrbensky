@@ -1,7 +1,7 @@
-import { SpaceType, Property } from "../GameBoard";
+import { SpaceType, Property, Chance, CommunityChest, Go, Jail, FreeParking, Tax, GO_TO_JAIL, Railroad, WaterWorks, ElectricCompany} from "../GameBoard";
 import { Player } from "../Player";
 
-const Properties: Property[] = [
+export const properties: Property[] = [
     {
         type: SpaceType.PROPERTY,
         id: 1,
@@ -12,7 +12,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 2,
+        id: 3,
         monopolyId: 1,
         name: "Whitechapel Road",
         price: 60,
@@ -20,7 +20,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 3,
+        id: 6,
         monopolyId: 2,
         name: "The Angel Islington",
         price: 100,
@@ -28,7 +28,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 4,
+        id: 8,
         monopolyId: 2,
         name: "Euston Road",
         price: 100,
@@ -36,7 +36,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 5,
+        id: 9,
         monopolyId: 2,
         name: "Pentonville Road",
         price: 120,
@@ -44,7 +44,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 6,
+        id: 11,
         monopolyId: 3,
         name: "Pall Mall",
         price: 140,
@@ -52,7 +52,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 7,
+        id: 13,
         monopolyId: 3,
         name: "Whitehall",
         price: 140,
@@ -60,7 +60,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 8,
+        id: 14,
         monopolyId: 3,
         name: "Northumberland Avenue",
         price: 160,
@@ -68,7 +68,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 9,
+        id: 16,
         monopolyId: 4,
         name: "Bow Street",
         price: 180,
@@ -76,7 +76,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 10,
+        id: 18,
         monopolyId: 4,
         name: "Marlborough Street",
         price: 180,
@@ -84,7 +84,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 11,
+        id: 19,
         monopolyId: 4,
         name: "Vine Street",
         price: 200,
@@ -92,7 +92,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 12,
+        id: 21,
         monopolyId: 5,
         name: "Strand",
         price: 220,
@@ -100,7 +100,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 13,
+        id: 23,
         monopolyId: 5,
         name: "Fleet Street",
         price: 220,
@@ -108,7 +108,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 14,
+        id: 24,
         monopolyId: 5,
         name: "Trafalgar Square",
         price: 240,
@@ -116,7 +116,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 15,
+        id: 26,
         monopolyId: 6,
         name: "Leicester Square",
         price: 260,
@@ -124,7 +124,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 16,
+        id: 27,
         monopolyId: 6,
         name: "Coventry Street",
         price: 260,
@@ -132,7 +132,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 17,
+        id: 29,
         monopolyId: 6,
         name: "Piccadilly",
         price: 280,
@@ -140,7 +140,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 18,
+        id: 31,
         monopolyId: 7,
         name: "Regent Street",
         price: 300,
@@ -148,7 +148,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 19,
+        id: 32,
         monopolyId: 7,
         name: "Oxford Street",
         price: 300,
@@ -156,7 +156,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 20,
+        id: 34,
         monopolyId: 7,
         name: "Bond Street",
         price: 320,
@@ -164,7 +164,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 21,
+        id: 37,
         monopolyId: 8,
         name: "Park Lane",
         price: 350,
@@ -172,7 +172,7 @@ const Properties: Property[] = [
     },
     {
         type: SpaceType.PROPERTY,
-        id: 22,
+        id: 39,
         monopolyId: 8,
         name: "Mayfair",
         price: 400,
@@ -180,4 +180,122 @@ const Properties: Property[] = [
     }
 ];
 
-export default Properties;
+export const chances: Chance[] = [ 
+    {
+        type: SpaceType.CHANCE,
+        id: 7,
+        text: "Advance to Go (Collect $200)"
+    },
+    {
+        type: SpaceType.CHANCE,
+        id: 22,
+        text: "Advance to Pall Mall"
+    },
+    {
+        type: SpaceType.CHANCE,
+        id: 36,
+        text: "Advance to Mayfair"
+    }
+];
+
+export const communityChests: CommunityChest[] = [ 
+    {
+        type: SpaceType.COMMUNITY_CHEST,
+        id: 2,
+        text: "Bank error in your favor – collect $200"
+    },
+    {
+        type: SpaceType.COMMUNITY_CHEST,
+        id: 17,
+        text: "You have won second prize in a beauty contest– collect $10"
+    },
+    {
+        type: SpaceType.COMMUNITY_CHEST,
+        id: 33,
+        text: "You inherit $100"
+    }
+];
+
+export const go: Go = {
+    type: SpaceType.GO,
+    id: 0,
+    name: "Go"
+};
+
+export const jail: Jail = {
+    type: SpaceType.JAIL,
+    id: 10,
+    name: "Jail"
+};
+
+export const freeParking: FreeParking = {
+    type: SpaceType.FREE_PARKING,
+    id: 20,
+    name: "Free Parking"
+};
+
+export const tax: Tax[] = [
+{
+    type: SpaceType.TAX,
+    id: 4,
+    name: "Income Tax",
+    amount: 200
+},
+{
+    type: SpaceType.TAX,
+    id: 38,
+    name: "Super Tax",
+    amount: 100
+}
+];
+
+export const goToJail: GO_TO_JAIL = {
+    type: SpaceType.GO_TO_JAIL,
+    id: 30,
+    name: "Go To Jail"
+ }
+
+export const railroads: Railroad[] = [
+    {
+        type: SpaceType.RAILROAD,
+        id: 5,
+        name: "Kings Cross Station",
+        price: 200,
+        rent: 25
+    },
+    {
+        type: SpaceType.RAILROAD,
+        id: 15,
+        name: "Marylebone Station",
+        price: 200,
+        rent: 25
+    },
+    {
+        type: SpaceType.RAILROAD,
+        id: 25,
+        name: "Fenchurch St Station",
+        price: 200,
+        rent: 25
+    },
+    {
+        type: SpaceType.RAILROAD,
+        id: 35,
+        name: "Liverpool St Station",
+        price: 200,
+        rent: 25
+    }
+  ];
+ 
+export const electricCompany: ElectricCompany = { 
+    type: SpaceType.ELECTRIC_COMPANY,
+    id: 12,
+    name: "Electric Company",
+    price: 150
+  };
+
+export const waterWorks: WaterWorks = { 
+    type: SpaceType.WATER_WORKS,
+    id: 28,
+    name: "Water Works",
+    price: 150
+};

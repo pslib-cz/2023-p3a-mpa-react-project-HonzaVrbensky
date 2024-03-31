@@ -2,8 +2,8 @@ import { Player } from "./Player";
 import GameBoard from "./GameBoard";
 
 
-interface GameState {
+export interface GameState {
     players: Player[];
     currentPlayerIndex: number;
     gameBoard: GameBoard;
-  }
+}

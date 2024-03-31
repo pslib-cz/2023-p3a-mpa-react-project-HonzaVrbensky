@@ -1,6 +1,6 @@
 import { Player } from "./Player";
 
-interface GameBoard {
+export interface GameBoard {
     spaces: Space[];
 }
 
@@ -12,6 +12,10 @@ export enum SpaceType {
     JAIL = "JAIL",
     FREE_PARKING = "FREE_PARKING",
     TAX = "TAX",
+    GO_TO_JAIL = "GO_TO_JAIL",
+    RAILROAD = "RAILROAD",
+    ELECTRIC_COMPANY = "ELECTRIC_COMPANY",
+    WATER_WORKS = "WATER_WORKS"
 }
 
 export interface Property {
@@ -60,7 +64,40 @@ export interface Tax {
     name: string;
     amount: number;
 }
-export type Space = Property | Chance | CommunityChest | Go | Jail | FreeParking | Tax;
+
+export interface GO_TO_JAIL {
+    type: SpaceType.GO_TO_JAIL;
+    id: number;
+    name: string;
+}
+
+export interface Railroad {
+    type: SpaceType.RAILROAD;
+    id: number;
+    name: string;
+    price: number;
+    rent: number;
+    owner?: Player;
+}
+
+export interface ElectricCompany { 
+    type: SpaceType.ELECTRIC_COMPANY;
+    id: number;
+    name: string;
+    price: number;
+    owner?: Player;
+
+};
+
+export interface WaterWorks {
+    type: SpaceType.WATER_WORKS;
+    id: number;
+    name: string;
+    price: number;
+    owner?: Player;
+}
+
+export type Space = Property | Chance | CommunityChest | Go | Jail | FreeParking | Tax | GO_TO_JAIL | Railroad | ElectricCompany | WaterWorks;
 
 
 export default GameBoard;
