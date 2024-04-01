@@ -75,8 +75,20 @@ type Action = {
             }
             return newState;
         case 'WIN_GAME':
+            const monopolies = properties.filter(property => property.monopolyId);
             const monopolyProperties = action.player.properties.filter(property => property.monopolyId);
+            const playerMonopolies = action.player.properties.filter(property => property.monopolyId);
+            let numberOfMonopolies = 0;
+            for(const monopole of monopolies) {
+                for(const playerMonopoly of playerMonopolies) {
+                    if(monopole === playerMonopoly) {
+                        numberOfMonopolies++;
+                    }
+                }
+            }
+
             const playersWithMoney = newState.players.filter(player => player.money > 0);
+            
             if(railroads.every(railroad => railroad.owner === action.player) || 
             monopolyProperties.length === 3 && monopolyProperties.every(property => property.owner === action.player) || 
             playersWithMoney.length === 1 && playersWithMoney[0] === action.player) {
