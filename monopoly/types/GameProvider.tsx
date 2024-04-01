@@ -76,8 +76,10 @@ type Action = {
             return newState;
         case 'WIN_GAME':
             const monopolyProperties = action.player.properties.filter(property => property.monopolyId);
+            const playersWithMoney = newState.players.filter(player => player.money > 0);
             if(railroads.every(railroad => railroad.owner === action.player) || 
-            monopolyProperties.length === 3 && monopolyProperties.every(property => property.owner === action.player)) {
+            monopolyProperties.length === 3 && monopolyProperties.every(property => property.owner === action.player) || 
+            playersWithMoney.length === 1 && playersWithMoney[0] === action.player) {
                 console.log(`${action.player.name} wins the game!`);
             }
             return newState;
