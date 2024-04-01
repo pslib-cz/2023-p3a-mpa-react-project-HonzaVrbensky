@@ -1,6 +1,6 @@
 import { CommunityChest, SpaceType } from "../GameBoard";
 
-const CommunityChests: CommunityChest[] = [
+export const CommunityChests: CommunityChest[] = [
 {
     type: SpaceType.COMMUNITY_CHEST,
     id: 1,

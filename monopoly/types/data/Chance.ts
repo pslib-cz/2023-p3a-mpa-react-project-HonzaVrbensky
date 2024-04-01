@@ -1,6 +1,6 @@
 import { Chance, SpaceType } from "../GameBoard";
 
-const ChanceCards: Chance[] = [
+export const ChanceCards: Chance[] = [
 {
     type: SpaceType.CHANCE,
     id: 1,

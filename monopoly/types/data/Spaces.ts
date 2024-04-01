@@ -1,5 +1,7 @@
 import { SpaceType, Property, Chance, CommunityChest, Go, Jail, FreeParking, Tax, GO_TO_JAIL, Railroad, WaterWorks, ElectricCompany} from "../GameBoard";
 import { Player } from "../Player";
+import { ChanceCards } from "./Chance";
+import { CommunityChests } from "./CommunityChests";
 
 export const properties: Property[] = [
     {
@@ -180,39 +182,49 @@ export const properties: Property[] = [
     }
 ];
 
+function shuffle(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+const shuffledChanceCards = shuffle(ChanceCards);
 export const chances: Chance[] = [ 
     {
         type: SpaceType.CHANCE,
         id: 7,
-        text: "Advance to Go (Collect $200)"
+        text: shuffledChanceCards[0].text
     },
     {
         type: SpaceType.CHANCE,
         id: 22,
-        text: "Advance to Pall Mall"
+        text: shuffledChanceCards[1].text
     },
     {
         type: SpaceType.CHANCE,
         id: 36,
-        text: "Advance to Mayfair"
+        text: shuffledChanceCards[2].text
     }
 ];
 
+const shuffledCommunityChests = shuffle(CommunityChests);
 export const communityChests: CommunityChest[] = [ 
     {
         type: SpaceType.COMMUNITY_CHEST,
         id: 2,
-        text: "Bank error in your favor – collect $200"
+        text: shuffledCommunityChests[0].text
     },
     {
         type: SpaceType.COMMUNITY_CHEST,
         id: 17,
-        text: "You have won second prize in a beauty contest– collect $10"
+        text: shuffledCommunityChests[1].text
     },
     {
         type: SpaceType.COMMUNITY_CHEST,
         id: 33,
-        text: "You inherit $100"
+        text: shuffledCommunityChests[2].text
     }
 ];
 

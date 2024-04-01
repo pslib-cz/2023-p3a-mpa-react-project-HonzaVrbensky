@@ -58,6 +58,7 @@ type Action = {
         case 'DICEROLL':
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const currentPlayer = newState.players[newState.currentPlayerIndex+diceroll] || newState.players[diceroll];
+            currentPlayer.position += diceroll;
             return newState;
         case 'BUY_PROPERTY':
             const property = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property;
@@ -74,8 +75,6 @@ type Action = {
             }
             return newState;
         case 'WIN_GAME':
-            return newState;
-        case 'PLAYER_MOVEMENT':
             return newState;
         default:
             return state;
