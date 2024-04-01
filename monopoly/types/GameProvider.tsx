@@ -9,7 +9,7 @@ interface IGameContext {
     dispatch: (action: Action) => void; 
 }
 
-const GameContext = createContext<IGameContext>({} as IGameContext);
+export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
     players: [{ id: 0, position: 0, name: "Player 1", money: 1500, properties: [] }, 
