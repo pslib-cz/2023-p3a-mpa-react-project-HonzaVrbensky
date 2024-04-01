@@ -2,7 +2,7 @@ import react, { PropsWithChildren, createContext, useReducer } from 'react';
 import { GameState } from './GameState';
 import { Player } from './Player';
 import { properties, chances, communityChests, jail, goToJail, freeParking, waterWorks, electricCompany, railroads, tax, go  } from './data/Spaces';
-import { Property  } from './GameBoard';
+import { ElectricCompany, Property, WaterWorks, Railroad  } from './GameBoard';
 
 interface IGameContext {
     state: GameState;
@@ -27,8 +27,8 @@ const initialState: GameState = {
             ...tax,
             jail,
             goToJail,
-            electricCompany,
-            waterWorks,
+            ...electricCompany,
+            ...waterWorks,
             freeParking
         ].sort((a, b) => a.id - b.id)
     }
@@ -39,11 +39,11 @@ type Action = {
 } | {
     type: 'BUY_PROPERTY';
     player: Player;
-    property: Property;
+    property: Property | WaterWorks | ElectricCompany | Railroad;
 } | {
     type: 'PAY_RENT';
     player: Player;
-    property: Property;
+    property: Property | WaterWorks | ElectricCompany | Railroad;
 } |{
     type: 'WIN_GAME';
     player: Player;
@@ -61,20 +61,25 @@ type Action = {
             currentPlayer.position += diceroll;
             return newState;
         case 'BUY_PROPERTY':
-            const property = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property;
+            const property = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
             if (property) {
                 property.owner = action.player;
                 action.player.money -= property.price;    
             }
             return newState;
         case 'PAY_RENT':
-            const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property;
+            const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
             if (rentProperty) {
                 action.player.money -= rentProperty.rent;
                 rentProperty.owner!.money += rentProperty.rent;
             }
             return newState;
         case 'WIN_GAME':
+            const monopolyProperties = action.player.properties.filter(property => property.monopolyId);
+            if(railroads.every(railroad => railroad.owner === action.player) || 
+            monopolyProperties.length === 3 && monopolyProperties.every(property => property.owner === action.player)) {
+                console.log(`${action.player.name} wins the game!`);
+            }
             return newState;
         default:
             return state;

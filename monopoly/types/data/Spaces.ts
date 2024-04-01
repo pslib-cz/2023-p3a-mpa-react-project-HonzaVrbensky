@@ -298,16 +298,22 @@ export const railroads: Railroad[] = [
     }
   ];
  
-export const electricCompany: ElectricCompany = { 
-    type: SpaceType.ELECTRIC_COMPANY,
-    id: 12,
-    name: "Electric Company",
-    price: 150
-  };
+export const electricCompany: ElectricCompany[] = [
+    {
+        type: SpaceType.ELECTRIC_COMPANY,
+        id: 12,
+        name: "Electric Company",
+        price: 150,
+        rent: 25
+    }
+];
 
-export const waterWorks: WaterWorks = { 
-    type: SpaceType.WATER_WORKS,
-    id: 28,
-    name: "Water Works",
-    price: 150
-};
+export const waterWorks: WaterWorks[] = [
+    {
+        type: SpaceType.WATER_WORKS,
+        id: 28,
+        name: "Water Works",
+        price: 150,
+        rent: 25
+    }
+];

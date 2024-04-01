@@ -85,6 +85,7 @@ export interface ElectricCompany {
     id: number;
     name: string;
     price: number;
+    rent: number;
     owner?: Player;
 
 };
@@ -94,6 +95,7 @@ export interface WaterWorks {
     id: number;
     name: string;
     price: number;
+    rent: number;
     owner?: Player;
 }
 
