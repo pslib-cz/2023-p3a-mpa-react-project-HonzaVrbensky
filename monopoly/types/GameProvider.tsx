@@ -49,6 +49,8 @@ type Action = {
     player: Player;
 } | {
     type: 'PLAYER_MOVEMENT';
+} | {
+    type: 'END_TURN';
 };
 
  const reducer = (state: GameState, action: Action): GameState => {
@@ -61,7 +63,6 @@ type Action = {
             const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
             newState.players[currentPlayerIndex].position = newPosition;
 
-            newState.currentPlayerIndex = (currentPlayerIndex + 1) % newState.players.length;
             return newState;
         case 'BUY_PROPERTY':
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
@@ -87,8 +88,11 @@ type Action = {
                     rentProperty.owner.money += rentProperty.rent;
                     console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);*/
                 }
-        return newState;
+            return newState;
         case 'WIN_GAME':
+            return newState;
+        case 'END_TURN':
+            newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
             return newState;
         default:
             return state;

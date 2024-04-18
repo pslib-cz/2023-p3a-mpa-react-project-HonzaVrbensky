@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import GameProvider, { GameContext } from './../../types/GameProvider';
+import Styles from './GameBoardPage.module.css';
 
 const GameBoardPage: React.FC = () => {
   const { state, dispatch } = useContext(GameContext);
 
   const handleDiceRoll = () => {
     dispatch({ type: 'DICEROLL' });
+  };
+
+  const handleEndTurn = () => {
+    dispatch({ type: 'END_TURN' });
   };
 
   const handleBuyProperty = () => {
@@ -32,6 +37,7 @@ const GameBoardPage: React.FC = () => {
       <h1>Monopoly Game Board</h1>
       <button onClick={handleDiceRoll}>Roll Dice</button>
       <button onClick={handleBuyProperty}>Buy Property</button>
+      <button onClick={handleEndTurn}>End Turn</button>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>
       {state.gameBoard.spaces.map((space, index) => (
         <div key={index}>
