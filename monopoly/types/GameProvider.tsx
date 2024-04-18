@@ -27,8 +27,8 @@ const initialState: GameState = {
             ...tax,
             jail,
             goToJail,
-            ...electricCompany,
-            ...waterWorks,
+            electricCompany,
+            waterWorks,
             freeParking
         ].sort((a, b) => a.id - b.id)
     }
@@ -57,43 +57,38 @@ type Action = {
     switch(action.type) {
         case 'DICEROLL':
             const diceroll = Math.floor(Math.random() * 6) + 1;
-            const currentPlayer = newState.players[newState.currentPlayerIndex+diceroll] || newState.players[diceroll];
-            currentPlayer.position += diceroll;
+            const currentPlayerIndex = newState.currentPlayerIndex;
+            const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
+            newState.players[currentPlayerIndex].position = newPosition;
+
+            newState.currentPlayerIndex = (currentPlayerIndex + 1) % newState.players.length;
             return newState;
         case 'BUY_PROPERTY':
-            const property = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
-            if (property) {
-                property.owner = action.player;
-                action.player.money -= property.price;    
-            }
-            return newState;
-        case 'PAY_RENT':
-            const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
-            if (rentProperty) {
-                action.player.money -= rentProperty.rent;
-                rentProperty.owner!.money += rentProperty.rent;
-            }
-            return newState;
-        case 'WIN_GAME':
-            const monopolies = properties.filter(property => property.monopolyId);
-            const monopolyProperties = action.player.properties.filter(property => property.monopolyId);
-            const playerMonopolies = action.player.properties.filter(property => property.monopolyId);
-            let numberOfMonopolies = 0;
-            for(const monopole of monopolies) {
-                for(const playerMonopoly of playerMonopolies) {
-                    if(monopole === playerMonopoly) {
-                        numberOfMonopolies++;
-                    }
+            const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
+            if (propertyToBuy) {
+                if (!propertyToBuy.owner) {
+                    propertyToBuy.owner = action.player;
+                    action.player.money -= propertyToBuy.price;
+                } else {
+                    console.log("This property is already owned.");
                 }
             }
-
-            const playersWithMoney = newState.players.filter(player => player.money > 0);
-            
-            if(railroads.every(railroad => railroad.owner === action.player) || 
-            monopolyProperties.length === 3 && monopolyProperties.every(property => property.owner === action.player) || 
-            playersWithMoney.length === 1 && playersWithMoney[0] === action.player) {
-                console.log(`${action.player.name} wins the game!`);
-            }
+            return newState;
+            case 'PAY_RENT':
+                const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.player.position) as Property | WaterWorks | ElectricCompany | Railroad;
+                if (rentProperty && rentProperty.owner) {
+                    if (rentProperty.id === action.player.id) {
+                    action.player.money -= rentProperty.rent;
+                    rentProperty.owner.money += rentProperty.rent;
+                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);
+                    }
+                    /*
+                    action.player.money -= rentProperty.rent;
+                    rentProperty.owner.money += rentProperty.rent;
+                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);*/
+                }
+        return newState;
+        case 'WIN_GAME':
             return newState;
         default:
             return state;
@@ -103,7 +98,7 @@ type Action = {
 export const GameProvider: React.FC<PropsWithChildren> = ({ children }) => {
 //    const [state, setState] = useState({ players: [], currentPlayer: 0 });
     const [state, dispatch] = useReducer(reducer, initialState);
-    console.log(initialState);
+    //console.log(initialState);
     return (
         <GameContext.Provider value={{ state, dispatch }}>
             {children}

@@ -193,16 +193,19 @@ function shuffle(array: any[]) {
 const shuffledChanceCards = shuffle(ChanceCards);
 export const chances: Chance[] = [ 
     {
+        name: "Chance",
         type: SpaceType.CHANCE,
         id: 7,
         text: shuffledChanceCards[0].text
     },
     {
+        name: "Chance",
         type: SpaceType.CHANCE,
         id: 22,
         text: shuffledChanceCards[1].text
     },
     {
+        name: "Chance",
         type: SpaceType.CHANCE,
         id: 36,
         text: shuffledChanceCards[2].text
@@ -212,16 +215,19 @@ export const chances: Chance[] = [
 const shuffledCommunityChests = shuffle(CommunityChests);
 export const communityChests: CommunityChest[] = [ 
     {
+        name: "Community Chest",
         type: SpaceType.COMMUNITY_CHEST,
         id: 2,
         text: shuffledCommunityChests[0].text
     },
     {
+        name: "Community Chest",
         type: SpaceType.COMMUNITY_CHEST,
         id: 17,
         text: shuffledCommunityChests[1].text
     },
     {
+        name: "Community Chest",
         type: SpaceType.COMMUNITY_CHEST,
         id: 33,
         text: shuffledCommunityChests[2].text
@@ -233,7 +239,6 @@ export const go: Go = {
     id: 0,
     name: "Go"
 };
-
 export const jail: Jail = {
     type: SpaceType.JAIL,
     id: 10,
@@ -298,22 +303,18 @@ export const railroads: Railroad[] = [
     }
   ];
  
-export const electricCompany: ElectricCompany[] = [
-    {
-        type: SpaceType.ELECTRIC_COMPANY,
-        id: 12,
-        name: "Electric Company",
-        price: 150,
-        rent: 25
-    }
-];
+export const electricCompany: ElectricCompany = { 
+    type: SpaceType.ELECTRIC_COMPANY,
+    id: 12,
+    name: "Electric Company",
+    price: 150,
+    rent: 25
+  };
 
-export const waterWorks: WaterWorks[] = [
-    {
-        type: SpaceType.WATER_WORKS,
-        id: 28,
-        name: "Water Works",
-        price: 150,
-        rent: 25
-    }
-];
+export const waterWorks: WaterWorks = { 
+    type: SpaceType.WATER_WORKS,
+    id: 28,
+    name: "Water Works",
+    price: 150,
+    rent: 25
+};

@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { GameContext } from './../../types/GameProvider.tsx';
+import GameProvider, { GameContext } from './../../types/GameProvider';
 
 const GameBoardPage: React.FC = () => {
-  const gameContext = useContext(GameContext);
+  const { state, dispatch } = useContext(GameContext);
+
+  const handleDiceRoll = () => {
+    dispatch({ type: 'DICEROLL' });
+  };
+
+  const handleBuyProperty = () => {
+    const currentPlayer = state.players[state.currentPlayerIndex];
+    const currentSpace = state.gameBoard.spaces[currentPlayer.position];
+
+    // Check if the current space is a property, railroad, electric company, or water works
+    if (
+      currentSpace.type === 'PROPERTY' ||
+      currentSpace.type === 'RAILROAD' ||
+      currentSpace.type === 'ELECTRIC_COMPANY' ||
+      currentSpace.type === 'WATER_WORKS'
+    ) {
+      dispatch({ type: 'BUY_PROPERTY', player: currentPlayer, property: currentSpace });
+    } else {
+      // Handle if the current space is not a property
+      console.log("You can't buy this space.");
+    }
+  };
+
   return (
     <div>
       <h1>Monopoly Game Board</h1>
-      <button onClick={() => {}}>Diceroll</button>
+      <button onClick={handleDiceRoll}>Roll Dice</button>
+      <button onClick={handleBuyProperty}>Buy Property</button>
+      <pre>{JSON.stringify(state.players, null, 2)}</pre>
+      {state.gameBoard.spaces.map((space, index) => (
+        <div key={index}>
+          <h2>{space.name}</h2>
+        </div>
+      ))}
+
       <Link to="/">Back to Home</Link>
-      <p>{JSON.stringify(gameContext)}</p>
     </div>
   );
-}
+};
 
 export default GameBoardPage;

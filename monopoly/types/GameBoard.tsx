@@ -29,12 +29,14 @@ export interface Property {
 }
 
 export interface Chance {
+    name: string;
     type: SpaceType.CHANCE;
     id: number;
     text: string;
 }
 
 export interface CommunityChest {
+    name: string;
     type: SpaceType.COMMUNITY_CHEST;
     id: number;
     text: string;

@@ -3,6 +3,6 @@ import GameBoard from "./GameBoard";
 
 export interface GameState {
   players: Player[];
-  currentPlayerIndex: number;
+  currentPlayerIndex: Player['id'];
   gameBoard: GameBoard;
 }
