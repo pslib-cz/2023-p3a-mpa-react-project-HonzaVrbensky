@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import GameProvider, { GameContext } from './../../types/GameProvider';
+import { GameContext } from './../../types/GameProvider'; // Assuming GameContext is exported from GameProvider
 import Styles from './GameBoardPage.module.css';
 
 const GameBoardPage: React.FC = () => {
@@ -45,9 +45,33 @@ const GameBoardPage: React.FC = () => {
           <h2>{space.name}</h2>
           <h3>{space.id}</h3>
           <h3>{space.type}</h3>
+
+          {space.type === 'RAILROAD' && (
+              <div>
+                <h4>Price: {space.price}</h4>
+                <h4>Owner: {space.owner}</h4>
+              </div>
+            )}
+          {space.type === 'ELECTRIC_COMPANY' && (
+            <div>
+              <h4>Price: {space.price}</h4>
+              <h4>Owner: {space.owner}</h4>
+            </div>
+          )}
+          {space.type === 'WATER_WORKS' && (
+            <div>
+              <h4>Price: {space.price}</h4>
+              <h4>Owner: {space.owner}</h4>
+            </div>
+          )}
+          {space.type === 'PROPERTY' && (
+            <div>
+              <h4>Price: {space.price}</h4>
+              <h4>Owner: {space.owner}</h4>
+            </div>
+          )}
         </div>
       ))}
-
       <Link to="/">Back to Home</Link>
     </div>
   );
