@@ -94,22 +94,14 @@ type Action = {
             }
             return newState;
         }
-            
-            /*case 'PAY_RENT':
-                const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.player.position) as Property | WaterWorks | ElectricCompany | Railroad;
-                if (rentProperty && rentProperty.owner) {
-                    if (rentProperty.id === action.player.id) {
-                    action.player.money -= rentProperty.rent;
-                    rentProperty.owner.money += rentProperty.rent;
-                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);
-                    }
-                    /*
-                    action.player.money -= rentProperty.rent;
-                    rentProperty.owner.money += rentProperty.rent;
-                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);
-                }
-            return newState;*/
         case 'WIN_GAME':
+            const remainingPlayers = newState.players.filter(player => player.money >= 0);
+            if (remainingPlayers.length === 1) {
+                console.log(`${remainingPlayers[0].name} has won the game!`);
+                // You might want to add some logic here to handle end game state, maybe display a winner modal or something similar.
+            } else {
+                console.log("The game cannot be won yet. Multiple players are still in the game.");
+            }
             return newState;
         case 'END_TURN':
             newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
