@@ -12,11 +12,12 @@ interface IGameContext {
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
-    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, properties: [] }, 
-              { id: 1, position: 0, name: "Player 2", money: 1500, properties: [] }, 
-              { id: 2, position: 0, name: "Player 3", money: 1500, properties: [] }, 
-              { id: 3, position: 0, name: "Player 4", money: 1500, properties: [] },],
+    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, properties: [], round: 1}, 
+              { id: 1, position: 0, name: "Player 2", money: 1500, properties: [], round: 1}, 
+              { id: 2, position: 0, name: "Player 3", money: 1500, properties: [], round: 1}, 
+              { id: 3, position: 0, name: "Player 4", money: 1500, properties: [], round: 1},],
     currentPlayerIndex: 0,
+    currentRound: 1,
     gameBoard: {
         spaces: [
             go,
@@ -58,11 +59,18 @@ type Action = {
     
     switch(action.type) {
         case 'DICEROLL':
+            if (newState.players[newState.currentPlayerIndex].round !== newState.currentRound) {
+                console.log("You have already rolled the dice in this round.");
+                return newState;
+            }
+        
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const currentPlayerIndex = newState.currentPlayerIndex;
             const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
             newState.players[currentPlayerIndex].position = newPosition;
-
+        
+            // Update the round count for the current player
+            newState.players[newState.currentPlayerIndex].round += 1;
             return newState;
         case 'BUY_PROPERTY':
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
