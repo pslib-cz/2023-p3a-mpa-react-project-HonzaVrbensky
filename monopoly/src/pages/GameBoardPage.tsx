@@ -43,6 +43,8 @@ const GameBoardPage: React.FC = () => {
       {state.gameBoard.spaces.map((space, index) => (
         <div key={index}>
           <h2>{space.name}</h2>
+          <h3>{space.id}</h3>
+          <h3>{space.type}</h3>
         </div>
       ))}
 

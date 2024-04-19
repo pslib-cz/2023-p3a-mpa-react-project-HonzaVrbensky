@@ -25,7 +25,7 @@ export interface Property {
     name: string;
     price: number;
     rent: number;
-    owner?: Player;
+    owner?: number;
 }
 
 export interface Chance {
@@ -80,7 +80,7 @@ export interface Railroad {
     name: string;
     price: number;
     rent: number;
-    owner?: Player;
+    owner?: number;
 }
 
 export interface ElectricCompany { 
@@ -89,7 +89,7 @@ export interface ElectricCompany {
     name: string;
     price: number;
     rent: number;
-    owner?: Player;
+    owner?: number;
 
 };
 
@@ -99,7 +99,7 @@ export interface WaterWorks {
     name: string;
     price: number;
     rent: number;
-    owner?: Player;
+    owner?: number;
 }
 
 export type Space = Property | Chance | CommunityChest | Go | Jail | FreeParking | Tax | GO_TO_JAIL | Railroad | ElectricCompany | WaterWorks;

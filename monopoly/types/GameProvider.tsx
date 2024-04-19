@@ -12,10 +12,10 @@ interface IGameContext {
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
-    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, properties: [], round: 1}, 
-              { id: 1, position: 0, name: "Player 2", money: 1500, properties: [], round: 1}, 
-              { id: 2, position: 0, name: "Player 3", money: 1500, properties: [], round: 1}, 
-              { id: 3, position: 0, name: "Player 4", money: 1500, properties: [], round: 1},],
+    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0}, 
+              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0}, 
+              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0}, 
+              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {
@@ -59,11 +59,11 @@ type Action = {
     const newState: GameState = JSON.parse(JSON.stringify(state));
     
     switch(action.type) {
-        case 'DICEROLL':
-           /* if (newState.players[newState.currentPlayerIndex].round !== newState.currentRound) {
+        case 'DICEROLL': {
+            if (newState.players[newState.currentPlayerIndex].round === newState.currentRound) {
                 console.log("You have already rolled the dice in this round.");
                 return newState;
-            }*/
+            }
         
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const currentPlayerIndex = newState.currentPlayerIndex;
@@ -71,26 +71,30 @@ type Action = {
             newState.players[currentPlayerIndex].position = newPosition;
             const rentProperty = newState.gameBoard.spaces.find(space => space.id === newPosition) as Property | WaterWorks | ElectricCompany | Railroad;
 
+            const owner = newState.players.find(player => player.id === rentProperty?.owner) as Player;
             //rent
-            if (rentProperty && rentProperty.owner && rentProperty.owner.id !== action.player.id) {
+            if (rentProperty && rentProperty.owner && owner.id !== action.player.id) {
                 action.player.money -= rentProperty.rent;
-                rentProperty.owner.money += rentProperty.rent;
-                console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);
+                owner.money += rentProperty.rent;
+                console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
             }
-
+            newState.players[currentPlayerIndex].round = newState.currentRound;
             return newState;
-        case 'BUY_PROPERTY':
+        }
+            
+        case 'BUY_PROPERTY': {
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
             if (propertyToBuy) {
                 if (!propertyToBuy.owner) {
-                    propertyToBuy.owner = action.player;
+                    propertyToBuy.owner = action.player.id;
                     action.player.money -= propertyToBuy.price;
-                    /*action.player.properties.push(propertyToBuy);*/
                 } else {
                     console.log("This property is already owned.");
                 }
             }
             return newState;
+        }
+            
             /*case 'PAY_RENT':
                 const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.player.position) as Property | WaterWorks | ElectricCompany | Railroad;
                 if (rentProperty && rentProperty.owner) {
@@ -109,6 +113,9 @@ type Action = {
             return newState;
         case 'END_TURN':
             newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
+            if (newState.currentPlayerIndex === 0) {
+                newState.currentRound++;
+            }
             return newState;
         default:
             return state;

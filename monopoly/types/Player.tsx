@@ -5,6 +5,5 @@ export interface Player {
     position: number;
     name: string;
     money: number;
-    properties: Property[];
     round: number;
   }
