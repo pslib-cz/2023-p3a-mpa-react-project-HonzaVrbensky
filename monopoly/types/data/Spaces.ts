@@ -276,6 +276,7 @@ export const railroads: Railroad[] = [
     {
         type: SpaceType.RAILROAD,
         id: 5,
+        monopolyId: 9,
         name: "Kings Cross Station",
         price: 200,
         rent: 25
@@ -283,6 +284,7 @@ export const railroads: Railroad[] = [
     {
         type: SpaceType.RAILROAD,
         id: 15,
+        monopolyId: 9,
         name: "Marylebone Station",
         price: 200,
         rent: 25
@@ -290,6 +292,7 @@ export const railroads: Railroad[] = [
     {
         type: SpaceType.RAILROAD,
         id: 25,
+        monopolyId: 9,
         name: "Fenchurch St Station",
         price: 200,
         rent: 25
@@ -297,6 +300,7 @@ export const railroads: Railroad[] = [
     {
         type: SpaceType.RAILROAD,
         id: 35,
+        monopolyId: 9,
         name: "Liverpool St Station",
         price: 200,
         rent: 25

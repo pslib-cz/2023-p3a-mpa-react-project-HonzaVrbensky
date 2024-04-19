@@ -37,6 +37,7 @@ const initialState: GameState = {
 
 type Action = { 
     type: 'DICEROLL';
+    player: Player;
 } | {
     type: 'BUY_PROPERTY';
     player: Player;
@@ -68,6 +69,15 @@ type Action = {
             const currentPlayerIndex = newState.currentPlayerIndex;
             const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
             newState.players[currentPlayerIndex].position = newPosition;
+            const rentProperty = newState.gameBoard.spaces.find(space => space.id === newPosition) as Property | WaterWorks | ElectricCompany | Railroad;
+
+            //rent
+            if (rentProperty && rentProperty.owner && rentProperty.owner.id !== action.player.id) {
+                action.player.money -= rentProperty.rent;
+                rentProperty.owner.money += rentProperty.rent;
+                console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);
+            }
+
             return newState;
         case 'BUY_PROPERTY':
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
@@ -75,12 +85,13 @@ type Action = {
                 if (!propertyToBuy.owner) {
                     propertyToBuy.owner = action.player;
                     action.player.money -= propertyToBuy.price;
+                    /*action.player.properties.push(propertyToBuy);*/
                 } else {
                     console.log("This property is already owned.");
                 }
             }
             return newState;
-            case 'PAY_RENT':
+            /*case 'PAY_RENT':
                 const rentProperty = newState.gameBoard.spaces.find(space => space.id === action.player.position) as Property | WaterWorks | ElectricCompany | Railroad;
                 if (rentProperty && rentProperty.owner) {
                     if (rentProperty.id === action.player.id) {
@@ -91,9 +102,9 @@ type Action = {
                     /*
                     action.player.money -= rentProperty.rent;
                     rentProperty.owner.money += rentProperty.rent;
-                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);*/
+                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${rentProperty.owner.name}`);
                 }
-            return newState;
+            return newState;*/
         case 'WIN_GAME':
             return newState;
         case 'END_TURN':

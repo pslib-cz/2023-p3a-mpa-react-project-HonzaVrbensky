@@ -76,6 +76,7 @@ export interface GO_TO_JAIL {
 export interface Railroad {
     type: SpaceType.RAILROAD;
     id: number;
+    monopolyId: number;
     name: string;
     price: number;
     rent: number;

@@ -7,7 +7,7 @@ const GameBoardPage: React.FC = () => {
   const { state, dispatch } = useContext(GameContext);
 
   const handleDiceRoll = () => {
-    dispatch({ type: 'DICEROLL' });
+    dispatch({ type: 'DICEROLL', player: state.players[state.currentPlayerIndex]});
   };
 
   const handleEndTurn = () => {
