@@ -59,18 +59,15 @@ type Action = {
     
     switch(action.type) {
         case 'DICEROLL':
-            if (newState.players[newState.currentPlayerIndex].round !== newState.currentRound) {
+           /* if (newState.players[newState.currentPlayerIndex].round !== newState.currentRound) {
                 console.log("You have already rolled the dice in this round.");
                 return newState;
-            }
+            }*/
         
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const currentPlayerIndex = newState.currentPlayerIndex;
             const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
             newState.players[currentPlayerIndex].position = newPosition;
-        
-            // Update the round count for the current player
-            newState.players[newState.currentPlayerIndex].round += 1;
             return newState;
         case 'BUY_PROPERTY':
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;

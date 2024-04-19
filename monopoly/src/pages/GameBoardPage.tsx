@@ -38,6 +38,7 @@ const GameBoardPage: React.FC = () => {
       <button onClick={handleDiceRoll}>Roll Dice</button>
       <button onClick={handleBuyProperty}>Buy Property</button>
       <button onClick={handleEndTurn}>End Turn</button>
+      <pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>
       {state.gameBoard.spaces.map((space, index) => (
         <div key={index}>
