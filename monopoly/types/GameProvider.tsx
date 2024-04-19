@@ -98,7 +98,6 @@ type Action = {
             const remainingPlayers = newState.players.filter(player => player.money >= 0);
             if (remainingPlayers.length === 1) {
                 console.log(`${remainingPlayers[0].name} has won the game!`);
-                // You might want to add some logic here to handle end game state, maybe display a winner modal or something similar.
             } else {
                 console.log("The game cannot be won yet. Multiple players are still in the game.");
             }
