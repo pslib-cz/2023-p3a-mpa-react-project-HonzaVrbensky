@@ -1,6 +1,7 @@
+// GameBoardPage.tsx
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { GameContext } from './../../types/GameProvider'; // Assuming GameContext is exported from GameProvider
+import { GameContext } from './../../types/GameProvider';
 import Styles from './GameBoardPage.module.css';
 
 const GameBoardPage: React.FC = () => {
@@ -18,7 +19,6 @@ const GameBoardPage: React.FC = () => {
     const currentPlayer = state.players[state.currentPlayerIndex];
     const currentSpace = state.gameBoard.spaces[currentPlayer.position];
 
-    // Check if the current space is a property, railroad, electric company, or water works
     if (
       currentSpace.type === 'PROPERTY' ||
       currentSpace.type === 'RAILROAD' ||
@@ -27,7 +27,6 @@ const GameBoardPage: React.FC = () => {
     ) {
       dispatch({ type: 'BUY_PROPERTY', player: currentPlayer, property: currentSpace });
     } else {
-      // Handle if the current space is not a property
       console.log("You can't buy this space.");
     }
   };
@@ -35,43 +34,44 @@ const GameBoardPage: React.FC = () => {
   return (
     <div>
       <h1>Monopoly Game Board</h1>
+      <div className={Styles["gameboard"]}>
+        {state.gameBoard.spaces.map((space, index) => (
+          <div className={Styles["space"]} key={index}>
+            <p>{space.name}</p>
+            <p>{space.id}</p>
+            <p>{space.type}</p>
+            {space.type === 'RAILROAD' && (
+              <div>
+                <p>Price: {space.price}</p>
+                <p>Owner: {space.owner}</p>
+              </div>
+            )}
+            {space.type === 'ELECTRIC_COMPANY' && (
+              <div>
+                <p>Price: {space.price}</p>
+                <p>Owner: {space.owner}</p>
+              </div>
+            )}
+            {space.type === 'WATER_WORKS' && (
+              <div>
+                <p>Price: {space.price}</p>
+                <p>Owner: {space.owner}</p>
+              </div>
+            )}
+            {space.type === 'PROPERTY' && (
+              <div>
+                <p>Price: {space.price}</p>
+                <p>Owner: {space.owner}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
       <button onClick={handleDiceRoll}>Roll Dice</button>
       <button onClick={handleBuyProperty}>Buy Property</button>
       <button onClick={handleEndTurn}>End Turn</button>
       <pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>
-      {state.gameBoard.spaces.map((space, index) => (
-        <div key={index}>
-          <h2>{space.name}</h2>
-          <h3>{space.id}</h3>
-          <h3>{space.type}</h3>
-
-          {space.type === 'RAILROAD' && (
-              <div>
-                <h4>Price: {space.price}</h4>
-                <h4>Owner: {space.owner}</h4>
-              </div>
-            )}
-          {space.type === 'ELECTRIC_COMPANY' && (
-            <div>
-              <h4>Price: {space.price}</h4>
-              <h4>Owner: {space.owner}</h4>
-            </div>
-          )}
-          {space.type === 'WATER_WORKS' && (
-            <div>
-              <h4>Price: {space.price}</h4>
-              <h4>Owner: {space.owner}</h4>
-            </div>
-          )}
-          {space.type === 'PROPERTY' && (
-            <div>
-              <h4>Price: {space.price}</h4>
-              <h4>Owner: {space.owner}</h4>
-            </div>
-          )}
-        </div>
-      ))}
       <Link to="/">Back to Home</Link>
     </div>
   );
