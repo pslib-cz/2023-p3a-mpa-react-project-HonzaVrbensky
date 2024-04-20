@@ -37,30 +37,30 @@ const GameBoardPage: React.FC = () => {
       <div className={Styles["gameboard"]}>
         {state.gameBoard.spaces.map((space, index) => (
           <div className={Styles["space"]} key={index}>
-            <p>{space.name}</p>
-            <p>{space.id}</p>
+            <p className={Styles["bold-text"]}>{space.id}</p>
+            <p className={Styles["bold-text"]}>{space.name}</p>
             <p>{space.type}</p>
             {space.type === 'RAILROAD' && (
               <div>
-                <p>Price: {space.price}</p>
+                <p className={Styles["bold-text"]}>Price: {space.price}</p>
                 <p>Owner: {space.owner}</p>
               </div>
             )}
             {space.type === 'ELECTRIC_COMPANY' && (
               <div>
-                <p>Price: {space.price}</p>
+                <p className={Styles["bold-text"]}>Price: {space.price}</p>
                 <p>Owner: {space.owner}</p>
               </div>
             )}
             {space.type === 'WATER_WORKS' && (
               <div>
-                <p>Price: {space.price}</p>
+                <p className={Styles["bold-text"]}>Price: {space.price}</p>
                 <p>Owner: {space.owner}</p>
               </div>
             )}
             {space.type === 'PROPERTY' && (
               <div>
-                <p>Price: {space.price}</p>
+                <p className={Styles["bold-text"]}>Price: {space.price}</p>
                 <p>Owner: {space.owner}</p>
               </div>
             )}

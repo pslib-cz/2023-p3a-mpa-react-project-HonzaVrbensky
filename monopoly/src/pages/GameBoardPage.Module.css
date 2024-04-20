@@ -11,10 +11,16 @@
   border: 1px solid black; /* Add borders to individual spaces */
 }
 
- p {
-    font-size: 14px;
-    color: black;
+p {
+  font-size: 14px;
+  color: black;
 }
+
+.bold-text {
+  font-weight: bold;
+}
+
+/*policka na hraci plose*/
 
 .space:nth-child(1) {
     grid-column: 11 / 12;
