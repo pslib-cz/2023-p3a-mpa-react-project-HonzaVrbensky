@@ -28,6 +28,7 @@ export interface Property {
     owner?: number;
     owner_color?: Player["color"];
     upgrades: number;
+    color: string;
 }
 
 export interface Chance {

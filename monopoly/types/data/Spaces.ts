@@ -11,7 +11,8 @@ export const properties: Property[] = [
         name: "Old Kent Road",
         price: 60,
         rent: 2,
-        upgrades: 0
+        upgrades: 0,
+        color: "brown"
     },
     {
         type: SpaceType.PROPERTY,
@@ -20,7 +21,8 @@ export const properties: Property[] = [
         name: "Whitechapel Road",
         price: 60,
         rent: 4,
-        upgrades: 0
+        upgrades: 0,
+        color: "brown"
     },
     {
         type: SpaceType.PROPERTY,
@@ -29,7 +31,8 @@ export const properties: Property[] = [
         name: "The Angel Islington",
         price: 100,
         rent: 6,
-        upgrades: 0 
+        upgrades: 0,
+        color: "lightblue"
     },
     {
         type: SpaceType.PROPERTY,
@@ -38,7 +41,8 @@ export const properties: Property[] = [
         name: "Euston Road",
         price: 100,
         rent: 6,
-        upgrades: 0
+        upgrades: 0,
+        color: "lightblue"
     },
     {
         type: SpaceType.PROPERTY,
@@ -47,7 +51,8 @@ export const properties: Property[] = [
         name: "Pentonville Road",
         price: 120,
         rent: 8,
-        upgrades: 0
+        upgrades: 0,
+        color: "lightblue"
     },
     {
         type: SpaceType.PROPERTY,
@@ -56,7 +61,8 @@ export const properties: Property[] = [
         name: "Pall Mall",
         price: 140,
         rent: 10,
-        upgrades: 0
+        upgrades: 0,
+        color: "pink"
     },
     {
         type: SpaceType.PROPERTY,
@@ -65,16 +71,18 @@ export const properties: Property[] = [
         name: "Whitehall",
         price: 140,
         rent: 10,
-        upgrades: 0
+        upgrades: 0,
+        color: "pink"
     },
     {
         type: SpaceType.PROPERTY,
         id: 14,
         monopolyId: 3,
-        name: "Northumberland Avenue",
+        name: "East Avenue",
         price: 160,
         rent: 12,
-        upgrades: 0
+        upgrades: 0,
+        color: "pink"
     },
     {
         type: SpaceType.PROPERTY,
@@ -83,16 +91,18 @@ export const properties: Property[] = [
         name: "Bow Street",
         price: 180,
         rent: 14,
-        upgrades: 0
+        upgrades: 0,
+        color: "orange"
     },
     {
         type: SpaceType.PROPERTY,
         id: 18,
         monopolyId: 4,
-        name: "Marlborough Street",
+        name: "Marl Street",
         price: 180,
         rent: 14,
-        upgrades: 0
+        upgrades: 0,
+        color: "orange"
     },
     {
         type: SpaceType.PROPERTY,
@@ -101,7 +111,8 @@ export const properties: Property[] = [
         name: "Vine Street",
         price: 200,
         rent: 16,
-        upgrades: 0
+        upgrades: 0,
+        color: "orange"
     },
     {
         type: SpaceType.PROPERTY,
@@ -110,7 +121,8 @@ export const properties: Property[] = [
         name: "Strand",
         price: 220,
         rent: 18,
-        upgrades: 0
+        upgrades: 0,
+        color: "red"
     },
     {
         type: SpaceType.PROPERTY,
@@ -119,7 +131,8 @@ export const properties: Property[] = [
         name: "Fleet Street",
         price: 220,
         rent: 18,
-        upgrades: 0
+        upgrades: 0,
+        color: "red"
     },
     {
         type: SpaceType.PROPERTY,
@@ -128,7 +141,8 @@ export const properties: Property[] = [
         name: "Trafalgar Square",
         price: 240,
         rent: 20,
-        upgrades: 0
+        upgrades: 0,
+        color: "red"
     },
     {
         type: SpaceType.PROPERTY,
@@ -137,7 +151,8 @@ export const properties: Property[] = [
         name: "Leicester Square",
         price: 260,
         rent: 22,
-        upgrades: 0
+        upgrades: 0,
+        color: "yellow"
     },
     {
         type: SpaceType.PROPERTY,
@@ -146,7 +161,8 @@ export const properties: Property[] = [
         name: "Coventry Street",
         price: 260,
         rent: 22,
-        upgrades: 0
+        upgrades: 0,
+        color: "yellow"
     },
     {
         type: SpaceType.PROPERTY,
@@ -155,25 +171,28 @@ export const properties: Property[] = [
         name: "Piccadilly",
         price: 280,
         rent: 24,
-        upgrades: 0
+        upgrades: 0,
+        color: "yellow"
     },
     {
         type: SpaceType.PROPERTY,
         id: 31,
         monopolyId: 7,
-        name: "Regent Street",
+        name: "Regen Street",
         price: 300,
         rent: 26,
-        upgrades: 0
+        upgrades: 0,
+        color: "green"
     },
     {
         type: SpaceType.PROPERTY,
         id: 32,
         monopolyId: 7,
-        name: "Oxford Street",
+        name: "Ox Street",
         price: 300,
         rent: 26,
-        upgrades: 0
+        upgrades: 0,
+        color: "green"
     },
     {
         type: SpaceType.PROPERTY,
@@ -182,7 +201,8 @@ export const properties: Property[] = [
         name: "Bond Street",
         price: 320,
         rent: 28,
-        upgrades: 0
+        upgrades: 0,
+        color: "green"
     },
     {
         type: SpaceType.PROPERTY,
@@ -191,7 +211,8 @@ export const properties: Property[] = [
         name: "Park Lane",
         price: 350,
         rent: 35,
-        upgrades: 0
+        upgrades: 0,
+        color: "blue"
     },
     {
         type: SpaceType.PROPERTY,
@@ -200,7 +221,8 @@ export const properties: Property[] = [
         name: "Mayfair",
         price: 400,
         rent: 50,
-        upgrades: 0
+        upgrades: 0,
+        color: "blue"
     }
 ];
 
@@ -308,7 +330,7 @@ export const railroads: Railroad[] = [
         type: SpaceType.RAILROAD,
         id: 15,
         monopolyId: 9,
-        name: "Marylebone Station",
+        name: "Love Station",
         price: 200,
         rent: 25,
         upgrades: 0
@@ -326,7 +348,7 @@ export const railroads: Railroad[] = [
         type: SpaceType.RAILROAD,
         id: 35,
         monopolyId: 9,
-        name: "Liverpool St Station",
+        name: "Live Station",
         price: 200,
         rent: 25,
         upgrades: 0
@@ -336,7 +358,7 @@ export const railroads: Railroad[] = [
 export const electricCompany: ElectricCompany = { 
     type: SpaceType.ELECTRIC_COMPANY,
     id: 12,
-    name: "Electric Company",
+    name: "Electric co.",
     price: 150,
     rent: 25,
     upgrades: 0

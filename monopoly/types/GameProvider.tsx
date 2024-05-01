@@ -15,7 +15,7 @@ const initialState: GameState = {
     players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "red"}, 
               { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "blue"}, 
               { id: 2, position: 0, name: "Player 3", money: 1500, round: 0, color: "green"}, 
-              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "yellow"},],
+              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "orange"},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {
@@ -100,7 +100,7 @@ type Action = {
             return newState;
         }
         case 'UPGRADE_PROPERTY': { 
-            const propertyToUpgrade = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
+            const propertyToUpgrade = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property;
             if (propertyToUpgrade) {
                 if (propertyToUpgrade.owner === action.player.id) {
                     if (propertyToUpgrade.upgrades < 4) { // Check if property can be upgraded
