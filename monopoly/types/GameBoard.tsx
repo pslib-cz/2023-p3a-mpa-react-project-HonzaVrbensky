@@ -26,6 +26,8 @@ export interface Property {
     price: number;
     rent: number;
     owner?: number;
+    owner_color?: Player["color"];
+    upgrades: number;
 }
 
 export interface Chance {
@@ -81,6 +83,8 @@ export interface Railroad {
     price: number;
     rent: number;
     owner?: number;
+    owner_color?: Player["color"];
+    upgrades: number;
 }
 
 export interface ElectricCompany { 
@@ -90,6 +94,8 @@ export interface ElectricCompany {
     price: number;
     rent: number;
     owner?: number;
+    owner_color?: Player["color"];
+    upgrades: number;
 
 };
 
@@ -100,6 +106,8 @@ export interface WaterWorks {
     price: number;
     rent: number;
     owner?: number;
+    owner_color?: Player["color"];
+    upgrades: number;
 }
 
 export type Space = Property | Chance | CommunityChest | Go | Jail | FreeParking | Tax | GO_TO_JAIL | Railroad | ElectricCompany | WaterWorks;

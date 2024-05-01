@@ -12,10 +12,10 @@ interface IGameContext {
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
-    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0}, 
-              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0}, 
-              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0}, 
-              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0},],
+    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "red"}, 
+              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "blue"}, 
+              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0, color: "green"}, 
+              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "yellow"},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {
@@ -53,6 +53,10 @@ type Action = {
     type: 'PLAYER_MOVEMENT';
 } | {
     type: 'END_TURN';
+}  | {
+    type: 'UPGRADE_PROPERTY';
+    player: Player;
+    property: Property | WaterWorks | ElectricCompany | Railroad;
 };
 
  const reducer = (state: GameState, action: Action): GameState => {
@@ -88,8 +92,26 @@ type Action = {
                 if (!propertyToBuy.owner) {
                     propertyToBuy.owner = action.player.id;
                     action.player.money -= propertyToBuy.price;
+                    propertyToBuy.owner_color = action.player.color;
                 } else {
                     console.log("This property is already owned.");
+                }
+            }
+            return newState;
+        }
+        case 'UPGRADE_PROPERTY': { 
+            const propertyToUpgrade = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
+            if (propertyToUpgrade) {
+                if (propertyToUpgrade.owner === action.player.id) {
+                    if (propertyToUpgrade.upgrades < 4) { // Check if property can be upgraded
+                        propertyToUpgrade.rent *= 2;
+                        action.player.money -= propertyToUpgrade.price;
+                        propertyToUpgrade.upgrades++; // Increment upgrade count
+                    } else {
+                        console.log("This property has reached its maximum upgrade limit.");
+                    }
+                } else {
+                    console.log("You do not own this property.");
                 }
             }
             return newState;

@@ -6,4 +6,5 @@ export interface Player {
     name: string;
     money: number;
     round: number;
+    color: string;
   }
