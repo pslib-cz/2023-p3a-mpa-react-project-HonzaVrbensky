@@ -33,16 +33,17 @@ const GameBoardPage: React.FC = () => {
   const handleBuyProperty = () => {
     const currentPlayer = state.players[state.currentPlayerIndex];
     const currentSpace = state.gameBoard.spaces[currentPlayer.position];
-
+  
     if (
-      currentSpace.type === 'PROPERTY' ||
+      (currentSpace.type === 'PROPERTY' ||
       currentSpace.type === 'RAILROAD' ||
       currentSpace.type === 'ELECTRIC_COMPANY' ||
-      currentSpace.type === 'WATER_WORKS' && currentSpace.owner === undefined
+      currentSpace.type === 'WATER_WORKS') &&
+      currentSpace.owner === undefined // Check if the property is not already owned
     ) {
       dispatch({ type: 'BUY_PROPERTY', player: currentPlayer, property: currentSpace });
     } else {
-      console.log("You can't buy this space.");
+      console.log("You can't buy this space or it's already owned.");
     }
   };
 
@@ -57,7 +58,7 @@ const GameBoardPage: React.FC = () => {
   const isUpgradable = ( currentSpace.type === 'PROPERTY');
 
   return (
-    <div style={{marginTop: "-2rem", display: "flex"}}>
+    <div style={{ display: "flex", marginLeft: "-13rem"}}>
       <div style={{display: "flex", flexDirection: "column", gap: "5px", marginTop: "3rem", minWidth: "103px"}}>
         <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}} onClick={handleDiceRoll}>Roll Dice</button>
         {isPurchasable && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Buy Property</button>}
@@ -68,7 +69,7 @@ const GameBoardPage: React.FC = () => {
       {/*<pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>*/}
 
-<div style={{position: "absolute", display: "flex", top: "50%", left: "55.5%", transform: "translate(-50%, -50%)" }}>
+<div style={{position: "absolute", display: "flex", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
         {state.players.map((player, index) => (
           <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px'}}>
             <p style={{fontSize: "16px", fontWeight: "bold"}}>{player.name}</p>
@@ -90,6 +91,7 @@ const GameBoardPage: React.FC = () => {
               <p className={Styles["bold-text"]}>{space.name}</p>
             </div>
 
+          <div style={{display: "flex"}}>
             {state.players.map((player, playerIndex) => (
               player.position === index && (
                 <div
@@ -104,6 +106,7 @@ const GameBoardPage: React.FC = () => {
                 ></div>
               )
             ))}
+            </div>
 
             {space.type === 'RAILROAD' && (
               <div className={Styles["info-container"]}>
@@ -112,7 +115,7 @@ const GameBoardPage: React.FC = () => {
                   {<p>Owner: {space.owner_color}</p>}
                 </div>
                 <div>
-                  <p>Rent: {space.rent}</p>
+                  <p>Tax: {space.rent}</p>
                   <p>Upgrades: {space.upgrades}</p>
                 </div>
               </div>
@@ -124,7 +127,7 @@ const GameBoardPage: React.FC = () => {
                    {<p>Owner: {space.owner_color}</p>}
                  </div>
                  <div>
-                   <p>Rent: {space.rent}</p>
+                   <p>Tax: {space.rent}</p>
                    <p>Upgrades: {space.upgrades}</p>
                  </div>
                </div>
@@ -136,7 +139,7 @@ const GameBoardPage: React.FC = () => {
                 {<p>Owner: {space.owner_color}</p>}
               </div>
               <div>
-                <p>Rent: {space.rent}</p>
+                <p>Tax: {space.rent}</p>
                 <p>Upgrades: {space.upgrades}</p>
               </div>
             </div>
@@ -148,7 +151,7 @@ const GameBoardPage: React.FC = () => {
                 {<p>Owner: {space.owner_color}</p>}
               </div>
               <div>
-                <p>Rent: {space.rent}</p>
+                <p>Tax: {space.rent}</p>
                 <p>Upgrades: {space.upgrades}</p>
               </div>
             </div>
