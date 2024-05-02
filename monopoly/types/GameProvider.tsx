@@ -92,6 +92,9 @@ type Action = {
                 return newState;
             }
 
+            newState.players[currentPlayerIndex].position = newPosition;
+            newState.players[currentPlayerIndex].round = newState.currentRound;
+
             //income tax
             if (newPosition === 4) {
                 newState.players[currentPlayerIndex].money -= 200;
@@ -115,9 +118,6 @@ type Action = {
                     console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
                 }
             }
-
-            newState.players[currentPlayerIndex].position = newPosition;
-            newState.players[currentPlayerIndex].round = newState.currentRound;
             return newState;
         }
             
@@ -125,9 +125,13 @@ type Action = {
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
             if (propertyToBuy) {
                 if (!propertyToBuy.owner) {
-                    propertyToBuy.owner = action.player.id;
-                    action.player.money -= propertyToBuy.price;
-                    propertyToBuy.owner_color = action.player.color;
+                    if (action.player.money >= propertyToBuy.price) { // Check if player has enough money
+                        propertyToBuy.owner = action.player.id;
+                        action.player.money -= propertyToBuy.price;
+                        propertyToBuy.owner_color = action.player.color;
+                    } else {
+                        console.log("You don't have enough money to buy this property.");
+                    }
                 } else {
                     console.log("This property is already owned.");
                 }
@@ -138,12 +142,16 @@ type Action = {
             const propertyToUpgrade = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property;
             if (propertyToUpgrade) {
                 if (propertyToUpgrade.owner === action.player.id) {
-                    if (propertyToUpgrade.upgrades < 4) { // Check if property can be upgraded
-                        propertyToUpgrade.rent *= 2;
-                        action.player.money -= propertyToUpgrade.price;
-                        propertyToUpgrade.upgrades++; // Increment upgrade count
+                    if (action.player.money >= propertyToUpgrade.price) { // Check if player has enough money
+                        if (propertyToUpgrade.upgrades < 4) { // Check if property can be upgraded
+                            propertyToUpgrade.rent *= 2;
+                            action.player.money -= propertyToUpgrade.price;
+                            propertyToUpgrade.upgrades++; // Increment upgrade count
+                        } else {
+                            console.log("This property has reached its maximum upgrade limit.");
+                        }
                     } else {
-                        console.log("This property has reached its maximum upgrade limit.");
+                        console.log("You don't have enough money to upgrade this property.");
                     }
                 } else {
                     console.log("You do not own this property.");
