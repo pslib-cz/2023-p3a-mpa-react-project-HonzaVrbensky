@@ -61,7 +61,7 @@ const GameBoardPage: React.FC = () => {
     <div style={{ display: "flex", marginLeft: "-13rem"}}>
       <div style={{display: "flex", flexDirection: "column", gap: "5px", marginTop: "3rem", minWidth: "103px"}}>
         <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}} onClick={handleDiceRoll}>Roll Dice</button>
-        {isPurchasable && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Buy Property</button>}
+        {isPurchasable && currentPlayer.money > currentSpace.price && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Buy Property</button>}
         {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Upgrade Property</button>)}
         <button onClick={handleEndTurn} style={{backgroundColor: currentPlayer.color, color: 'black'}}>End Turn</button>
         <Link to="/">Back to Home</Link>

@@ -95,7 +95,7 @@ border-left: 1px solid black;
     gap: 0.5rem;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, pink 29%, #f9f9f9 25%);
+    background: linear-gradient(90deg, pink 25%, #f9f9f9 25%);
 }
 .space:nth-child(13) {
     grid-column: 1 / 3;
@@ -110,7 +110,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, pink 26%, #f9f9f9 25%);
+    background: linear-gradient(90deg, pink 20%, #f9f9f9 20%);
 }
 .space:nth-child(15) {
     grid-column: 1 / 3;
@@ -118,7 +118,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, pink 32%, #f9f9f9 25%);
+    background: linear-gradient(90deg, pink 25%, #f9f9f9 20%);
 }
 .space:nth-child(16) {
     grid-column: 1 / 3;
@@ -133,7 +133,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, orange 29%, #f9f9f9 25%);
+    background: linear-gradient(90deg, orange 23%, #f9f9f9 20%);
 }
 .space:nth-child(18) {
     grid-column: 1 / 3;
@@ -148,7 +148,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, orange 30%, #f9f9f9 25%);
+    background: linear-gradient(90deg, orange 22%, #f9f9f9 25%);
 }
 .space:nth-child(20) {
     grid-column: 1 / 3;
@@ -156,7 +156,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, orange 29%, #f9f9f9 25%);
+    background: linear-gradient(90deg, orange 23%, #f9f9f9 20%);
 }
 /*horni rada*/
 .space:nth-child(21) {
@@ -216,7 +216,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, lightgreen 34%, #f9f9f9 30%);
+    background: linear-gradient(90deg, lightgreen 27%, #f9f9f9 20%);
 }
 .space:nth-child(33) {
     grid-column: 12 / 14;
@@ -224,7 +224,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, lightgreen 25%, #f9f9f9 20%);
+    background: linear-gradient(90deg, lightgreen 20%, #f9f9f9 20%);
 }
 .space:nth-child(34) {
     grid-column: 12 / 14;
@@ -239,7 +239,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, lightgreen 31%, #f9f9f9 30%);
+    background: linear-gradient(90deg, lightgreen 25%, #f9f9f9 20%);
 }
 .space:nth-child(36) {
     grid-column: 12 / 14;
@@ -261,7 +261,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, royalblue 26%, #f9f9f9 20%);
+    background: linear-gradient(90deg, royalblue 21%, #f9f9f9 20%);
 }
 .space:nth-child(39) {
     grid-column: 12 / 14;
@@ -276,7 +276,7 @@ border-left: 1px solid black;
     display: flex;
     max-height: 8rem;
     align-items: center;
-    background: linear-gradient(90deg, royalblue 21%, #f9f9f9 20%);
+    background: linear-gradient(90deg, royalblue 17%, #f9f9f9 1%);
 }
 
 

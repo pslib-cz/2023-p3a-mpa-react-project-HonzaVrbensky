@@ -92,9 +92,6 @@ type Action = {
                 return newState;
             }
 
-            newState.players[currentPlayerIndex].position = newPosition;
-            newState.players[currentPlayerIndex].round = newState.currentRound;
-
             //income tax
             if (newPosition === 4) {
                 newState.players[currentPlayerIndex].money -= 200;
@@ -110,14 +107,16 @@ type Action = {
             //rent
             if (rentProperty && rentProperty.owner) {
                 const owner = newState.players.find(player => player.id === rentProperty.owner);
-        
-                // If owner exists and is not the current player, transfer rent
+
                 if (owner && owner.id !== action.player.id) {
                     action.player.money -= rentProperty.rent;
                     owner.money += rentProperty.rent;
                     console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
+                    return newState;
                 }
             }
+            newState.players[currentPlayerIndex].position = newPosition;
+            newState.players[currentPlayerIndex].round = newState.currentRound;
             return newState;
         }
             
@@ -167,6 +166,7 @@ type Action = {
                 newState.currentRound++;
             }
 
+            // Remove player if they have no money
             if (newState.players[currentPlayerIndex].money <= 0) {
                 newState.players.splice(currentPlayerIndex, 1);
                 if (newState.currentPlayerIndex >= newState.players.length) {
@@ -176,6 +176,7 @@ type Action = {
                 return newState;
             }
 
+            // Win
             const remainingPlayers = newState.players.filter(player => player.money >= 0);
             if (remainingPlayers.length === 1) {
                 console.log(`${remainingPlayers[0].name} has won the game!`);
