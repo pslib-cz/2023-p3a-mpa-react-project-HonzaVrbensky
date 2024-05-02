@@ -98,7 +98,8 @@ const GameBoardPage: React.FC = () => {
                     width: '15px',
                     height: '15px',
                     borderRadius: '50%',
-                    backgroundColor: player.color // Assuming players have a color property
+                    backgroundColor: player.color,
+                    border: "1px solid black" // Assuming players have a color property
                   }}
                 ></div>
               )

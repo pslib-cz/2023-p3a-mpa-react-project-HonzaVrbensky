@@ -12,10 +12,10 @@ interface IGameContext {
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
-    players: [{ id: 0, position: 0, name: "Player 1", money: 100, round: 0, color: "red"}, 
-              { id: 1, position: 0, name: "Player 2", money: 100, round: 0, color: "blue"}, 
-              { id: 2, position: 0, name: "Player 3", money: 100, round: 0, color: "green"}, 
-              { id: 3, position: 0, name: "Player 4", money: 100, round: 0, color: "orange"},],
+    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "red"}, 
+              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "blue"}, 
+              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0, color: "green"}, 
+              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "orange"},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {
@@ -69,21 +69,38 @@ type Action = {
                 console.log("You have already rolled the dice in this round.");
                 return newState;
             }
-        
-            
+            //must add the "GO_TO_JAIL" and "JAIL"
 
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const currentPlayerIndex = newState.currentPlayerIndex;
             const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
-            newState.players[currentPlayerIndex].position = newPosition;
             const rentProperty = newState.gameBoard.spaces.find(space => space.id === newPosition) as Property | WaterWorks | ElectricCompany | Railroad;
 
-            if (newState.players[currentPlayerIndex].money <= 0) {
-                newState.players.splice(currentPlayerIndex, 1);
-                if (newState.currentPlayerIndex >= newState.players.length) {
-                    newState.currentPlayerIndex = 0; // Reset to first player if last player was removed
+            // Go to jail
+            if (newPosition === 30) {
+                newState.players[currentPlayerIndex].position = 10;
+                newState.players[currentPlayerIndex].round = newState.currentRound;
+                return newState;
+            }
+
+            // Jail
+             if (newState.players[currentPlayerIndex].position === 10) {
+                if (!!(diceroll & 1)) {
+                    newState.players[currentPlayerIndex].position = newPosition;
                 }
-                console.log(`${action.player.name} has been removed from the game.`);
+                newState.players[currentPlayerIndex].round = newState.currentRound;
+                return newState;
+            }
+
+            //income tax
+            if (newPosition === 4) {
+                newState.players[currentPlayerIndex].money -= 200;
+                return newState;
+            }
+
+            //super tax
+            if (newPosition === 38) {
+                newState.players[currentPlayerIndex].money -= 300;
                 return newState;
             }
 
@@ -98,6 +115,8 @@ type Action = {
                     console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
                 }
             }
+
+            newState.players[currentPlayerIndex].position = newPosition;
             newState.players[currentPlayerIndex].round = newState.currentRound;
             return newState;
         }
