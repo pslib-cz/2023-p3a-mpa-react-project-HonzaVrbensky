@@ -12,10 +12,10 @@ interface IGameContext {
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
-    players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "red"}, 
-              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "blue"}, 
-              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0, color: "green"}, 
-              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "orange"},],
+    players: [{ id: 0, position: 0, name: "Player 1", money: 100, round: 0, color: "red"}, 
+              { id: 1, position: 0, name: "Player 2", money: 100, round: 0, color: "blue"}, 
+              { id: 2, position: 0, name: "Player 3", money: 100, round: 0, color: "green"}, 
+              { id: 3, position: 0, name: "Player 4", money: 100, round: 0, color: "orange"},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {
@@ -53,6 +53,7 @@ type Action = {
     type: 'PLAYER_MOVEMENT';
 } | {
     type: 'END_TURN';
+    player: Player;
 }  | {
     type: 'UPGRADE_PROPERTY';
     player: Player;
@@ -69,18 +70,33 @@ type Action = {
                 return newState;
             }
         
+            
+
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const currentPlayerIndex = newState.currentPlayerIndex;
             const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
             newState.players[currentPlayerIndex].position = newPosition;
             const rentProperty = newState.gameBoard.spaces.find(space => space.id === newPosition) as Property | WaterWorks | ElectricCompany | Railroad;
 
-            const owner = newState.players.find(player => player.id === rentProperty?.owner) as Player;
+            if (newState.players[currentPlayerIndex].money <= 0) {
+                newState.players.splice(currentPlayerIndex, 1);
+                if (newState.currentPlayerIndex >= newState.players.length) {
+                    newState.currentPlayerIndex = 0; // Reset to first player if last player was removed
+                }
+                console.log(`${action.player.name} has been removed from the game.`);
+                return newState;
+            }
+
             //rent
-            if (rentProperty && rentProperty.owner && owner.id !== action.player.id) {
-                action.player.money -= rentProperty.rent;
-                owner.money += rentProperty.rent;
-                console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
+            if (rentProperty && rentProperty.owner) {
+                const owner = newState.players.find(player => player.id === rentProperty.owner);
+        
+                // If owner exists and is not the current player, transfer rent
+                if (owner && owner.id !== action.player.id) {
+                    action.player.money -= rentProperty.rent;
+                    owner.money += rentProperty.rent;
+                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
+                }
             }
             newState.players[currentPlayerIndex].round = newState.currentRound;
             return newState;
@@ -116,19 +132,30 @@ type Action = {
             }
             return newState;
         }
-        case 'WIN_GAME':
+        case 'END_TURN':
+
+        const currentPlayerIndex = newState.currentPlayerIndex;
+            newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
+            if (newState.currentPlayerIndex === 0) {
+                newState.currentRound++;
+            }
+
+            if (newState.players[currentPlayerIndex].money <= 0) {
+                newState.players.splice(currentPlayerIndex, 1);
+                if (newState.currentPlayerIndex >= newState.players.length) {
+                    newState.currentPlayerIndex = 0; // Reset to first player if last player was removed
+                }
+                console.log(`${action.player.name} has been removed from the game.`);
+                return newState;
+            }
+
             const remainingPlayers = newState.players.filter(player => player.money >= 0);
             if (remainingPlayers.length === 1) {
                 console.log(`${remainingPlayers[0].name} has won the game!`);
             } else {
                 console.log("The game cannot be won yet. Multiple players are still in the game.");
             }
-            return newState;
-        case 'END_TURN':
-            newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
-            if (newState.currentPlayerIndex === 0) {
-                newState.currentRound++;
-            }
+
             return newState;
         default:
             return state;

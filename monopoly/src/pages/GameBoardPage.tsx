@@ -13,7 +13,7 @@ const GameBoardPage: React.FC = () => {
   };
 
   const handleEndTurn = () => {
-    dispatch({ type: 'END_TURN' });
+    dispatch({ type: 'END_TURN', player: state.players[state.currentPlayerIndex]});
   };
 
   const handleUpgradeProperty = () => {
@@ -57,8 +57,8 @@ const GameBoardPage: React.FC = () => {
   const isUpgradable = ( currentSpace.type === 'PROPERTY');
 
   return (
-    <div style={{marginTop: "-2rem"}}>
-      <div style={{position: "absolute", left: "8rem", top: "3rem", display: "flex", flexDirection: "column", gap: "5px"}}>
+    <div style={{marginTop: "-2rem", display: "flex"}}>
+      <div style={{display: "flex", flexDirection: "column", gap: "5px", marginTop: "3rem", minWidth: "103px"}}>
         <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}} onClick={handleDiceRoll}>Roll Dice</button>
         {isPurchasable && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Buy Property</button>}
         {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Upgrade Property</button>)}
@@ -68,8 +68,21 @@ const GameBoardPage: React.FC = () => {
       {/*<pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>*/}
 
+<div style={{position: "absolute", display: "flex", top: "50%", left: "55.5%", transform: "translate(-50%, -50%)" }}>
+        {state.players.map((player, index) => (
+          <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px'}}>
+            <p style={{fontSize: "16px", fontWeight: "bold"}}>{player.name}</p>
+            <p style={{fontSize: "16px", fontWeight: "bold"}}>Money: {player.money}</p>
+            <p style={{fontSize: "16px", fontWeight: "bold"}}>Position: {player.position}</p>
+
+          </div>
+        ))}
+      </div>
+
       <div className={Styles["gameboard"]}>
+
         {state.gameBoard.spaces.map((space, index) => (
+
           <div className={Styles["space"]} key={index}>
 
             <div>
