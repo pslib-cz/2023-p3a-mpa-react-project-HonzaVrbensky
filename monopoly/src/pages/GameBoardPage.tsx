@@ -72,10 +72,10 @@ const GameBoardPage: React.FC = () => {
 <div style={{position: "absolute", display: "flex", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
         {state.players.map((player, index) => (
           <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px'}}>
-            <p style={{fontSize: "16px", fontWeight: "bold"}}>{player.name}</p>
+            <p style={{fontSize: "16px", fontWeight: "bold"}}>Player {player.color}</p>
             <p style={{fontSize: "16px", fontWeight: "bold"}}>Money: {player.money}</p>
             <p style={{fontSize: "16px", fontWeight: "bold"}}>Position: {player.position}</p>
-
+            <p style={{fontSize: "16px", fontWeight: "bold"}}>Round: {player.round}</p>
           </div>
         ))}
       </div>
