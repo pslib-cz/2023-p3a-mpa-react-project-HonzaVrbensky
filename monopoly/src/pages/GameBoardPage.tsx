@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GameContext } from './../../types/GameProvider';
 import Styles from './GameBoardPage.module.css';
@@ -7,6 +7,13 @@ import { properties } from '../../types/data/Spaces';
 
 const GameBoardPage: React.FC = () => {
   const { state, dispatch } = useContext(GameContext);
+  const [recentMessage, setRecentMessage] = useState<string | null>(null);
+
+  const logAndSetMessage = (message: string) => {
+    console.log(message);
+    setRecentMessage(message);
+};
+
 
   const handleDiceRoll = () => {
     dispatch({ type: 'DICEROLL', player: state.players[state.currentPlayerIndex]});
@@ -59,15 +66,22 @@ const GameBoardPage: React.FC = () => {
 
   return (
     <div style={{ display: "flex", marginLeft: "-13rem"}}>
+
       <div style={{display: "flex", flexDirection: "column", gap: "5px", marginTop: "3rem", minWidth: "103px"}}>
-        <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}} onClick={handleDiceRoll}>Roll Dice</button>
-        {isPurchasable && currentPlayer.money > currentSpace.price && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Buy Property</button>}
-        {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "3px"}}>Upgrade Property</button>)}
+        <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}} onClick={handleDiceRoll}>Roll Dice</button>
+        {isPurchasable && currentPlayer.money > currentSpace.price && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}}>Buy Property</button>}
+        {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}}>Upgrade Property</button>)}
         <button onClick={handleEndTurn} style={{backgroundColor: currentPlayer.color, color: 'black'}}>End Turn</button>
         <Link to="/">Back to Home</Link>
       </div>
       {/*<pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>*/}
+
+<div style={{ color: "black", position: "absolute", display: "flex", top: "37%", left: "50%", transform: "translate(-50%, -50%)"}}>
+      {/* Display recent console message if available */}
+      <p>console: </p>
+      {recentMessage && <p>{recentMessage}</p>}
+      </div>
 
 <div style={{position: "absolute", display: "flex", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
         {state.players.map((player, index) => (

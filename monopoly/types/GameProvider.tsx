@@ -119,7 +119,7 @@ type Action = {
                 if (owner && owner.id !== currentPlayer.id) {
                     currentPlayer.money -= rentProperty.rent;
                     owner.money += rentProperty.rent;
-                    console.log(`${currentPlayer.name} paid ${rentProperty.rent} to ${owner.name}`);
+                    console.log(`${currentPlayer.color} paid ${rentProperty.rent} to ${owner.color}`);
                 }
             }
         
@@ -187,7 +187,7 @@ type Action = {
             // Win
             const remainingPlayers = newState.players.filter(player => player.money >= 0);
             if (remainingPlayers.length === 1) {
-                console.log(`${remainingPlayers[0].name} has won the game!`);
+                console.log(`${remainingPlayers[0].color} has won the game!`);
             } else {
                 console.log("The game cannot be won yet. Multiple players are still in the game.");
             }
