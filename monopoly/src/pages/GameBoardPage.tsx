@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GameContext } from './../../types/GameProvider';
 import Styles from './GameBoardPage.module.css';
@@ -7,13 +7,6 @@ import { properties } from '../../types/data/Spaces';
 
 const GameBoardPage: React.FC = () => {
   const { state, dispatch } = useContext(GameContext);
-  const [recentMessage, setRecentMessage] = useState<string | null>(null);
-
-  const logAndSetMessage = (message: string) => {
-    console.log(message);
-    setRecentMessage(message);
-};
-
 
   const handleDiceRoll = () => {
     dispatch({ type: 'DICEROLL', player: state.players[state.currentPlayerIndex]});
@@ -21,6 +14,10 @@ const GameBoardPage: React.FC = () => {
 
   const handleEndTurn = () => {
     dispatch({ type: 'END_TURN', player: state.players[state.currentPlayerIndex]});
+  };
+
+  const handleNewGame = () => {
+    dispatch({ type: 'NEW_GAME' });
   };
 
   const handleUpgradeProperty = () => {
@@ -64,6 +61,20 @@ const GameBoardPage: React.FC = () => {
   );
   const isUpgradable = ( currentSpace.type === 'PROPERTY');
 
+if (state.gameOver) { 
+  return (
+    <div>
+      <h1>Game Over!</h1>
+      <p style={{fontSize: "23px", color: "white"}}>{currentPlayer.color} wins!</p>
+      <div>
+        <button onClick={handleNewGame}>New Game</button>
+        <Link to="/">Back to Home</Link>
+      </div>
+    </div>
+  );
+
+}
+
   return (
     <div style={{ display: "flex", marginLeft: "-13rem"}}>
 
@@ -77,16 +88,10 @@ const GameBoardPage: React.FC = () => {
       {/*<pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>*/}
 
-<div style={{ color: "black", position: "absolute", display: "flex", top: "37%", left: "50%", transform: "translate(-50%, -50%)"}}>
-      {/* Display recent console message if available */}
-      <p>console: </p>
-      {recentMessage && <p>{recentMessage}</p>}
-      </div>
-
 <div style={{position: "absolute", display: "flex", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
         {state.players.map((player, index) => (
           <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px'}}>
-            <p style={{fontSize: "16px", fontWeight: "bold"}}>Player {player.color}</p>
+            <p style={{fontSize: "16px", fontWeight: "bold"}}>Player: {player.color}</p>
             <p style={{fontSize: "16px", fontWeight: "bold"}}>Money: {player.money}</p>
             <p style={{fontSize: "16px", fontWeight: "bold"}}>Position: {player.position}</p>
             <p style={{fontSize: "16px", fontWeight: "bold"}}>Round: {player.round}</p>

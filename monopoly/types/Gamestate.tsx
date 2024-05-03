@@ -6,4 +6,5 @@ export interface GameState {
   currentPlayerIndex: Player['id'];
   currentRound: number;
   gameBoard: GameBoard;
+  gameOver: boolean;
 }

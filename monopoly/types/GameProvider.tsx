@@ -1,4 +1,4 @@
-import react, { PropsWithChildren, createContext, useReducer } from 'react';
+import react, { PropsWithChildren, createContext, useEffect, useReducer } from 'react';
 import { GameState } from './GameState';
 import { Player } from './Player';
 import { properties, chances, communityChests, jail, goToJail, freeParking, waterWorks, electricCompany, railroads, tax, go  } from './data/Spaces';
@@ -12,10 +12,11 @@ interface IGameContext {
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
+    gameOver: false,
     players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "red"}, 
-              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "blue"}, 
-              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0, color: "green"}, 
-              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "orange"},],
+              { id: 1, position: 0, name: "Player 2", money: 0, round: 0, color: "blue"}, 
+              { id: 2, position: 0, name: "Player 3", money: 0, round: 0, color: "green"}, 
+              { id: 3, position: 0, name: "Player 4", money: 0, round: 0, color: "orange"},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {
@@ -58,7 +59,12 @@ type Action = {
     type: 'UPGRADE_PROPERTY';
     player: Player;
     property: Property | WaterWorks | ElectricCompany | Railroad;
-};
+} | {
+    type: 'LOAD_GAME';
+    gameState: GameState;
+} | {
+    type: 'NEW_GAME';
+}
 
  const reducer = (state: GameState, action: Action): GameState => {
     const newState: GameState = JSON.parse(JSON.stringify(state));
@@ -120,6 +126,7 @@ type Action = {
                     currentPlayer.money -= rentProperty.rent;
                     owner.money += rentProperty.rent;
                     console.log(`${currentPlayer.color} paid ${rentProperty.rent} to ${owner.color}`);
+                    return newState;
                 }
             }
         
@@ -187,12 +194,19 @@ type Action = {
             // Win
             const remainingPlayers = newState.players.filter(player => player.money >= 0);
             if (remainingPlayers.length === 1) {
+                newState.gameOver = true;
                 console.log(`${remainingPlayers[0].color} has won the game!`);
             } else {
                 console.log("The game cannot be won yet. Multiple players are still in the game.");
             }
 
             return newState;
+
+        case 'LOAD_GAME':
+            return action.gameState;
+
+        case 'NEW_GAME':
+            return initialState;
         default:
             return state;
     }
@@ -201,6 +215,21 @@ type Action = {
 export const GameProvider: React.FC<PropsWithChildren> = ({ children }) => {
 //    const [state, setState] = useState({ players: [], currentPlayer: 0 });
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    useEffect(() => {
+        const gameState = localStorage.getItem('gameState');
+        if (gameState) {
+            const parsedGameState = JSON.parse(gameState);
+            if ((parsedGameState.currentRound === initialState.currentRound && parsedGameState.currentPlayerIndex !== initialState.currentPlayerIndex) || parsedGameState.currentRound !== initialState.currentRound) {
+                dispatch({ type: 'LOAD_GAME', gameState: parsedGameState });
+            }
+        }
+     }, []);
+     
+     useEffect(() => {
+       localStorage.setItem('gameState', JSON.stringify(state)); 
+     }, [state]);
+
     //console.log(initialState);
     return (
         <GameContext.Provider value={{ state, dispatch }}>
