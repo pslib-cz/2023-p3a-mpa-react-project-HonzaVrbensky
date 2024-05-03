@@ -65,58 +65,66 @@ type Action = {
     
     switch(action.type) {
         case 'DICEROLL': {
-            if (newState.players[newState.currentPlayerIndex].round === newState.currentRound) {
+            const currentPlayerIndex = newState.currentPlayerIndex;
+            const currentPlayer = newState.players[currentPlayerIndex];
+        
+            if (currentPlayer.round === newState.currentRound) {
                 console.log("You have already rolled the dice in this round.");
                 return newState;
             }
-            //must add the "GO_TO_JAIL" and "JAIL"
-
+        
+            // Must add the "GO_TO_JAIL" and "JAIL"
+        
             const diceroll = Math.floor(Math.random() * 6) + 1;
-            const currentPlayerIndex = newState.currentPlayerIndex;
-            const newPosition = (newState.players[currentPlayerIndex].position + diceroll) % newState.gameBoard.spaces.length;
+            const newPosition = (currentPlayer.position + diceroll) % newState.gameBoard.spaces.length;
             const rentProperty = newState.gameBoard.spaces.find(space => space.id === newPosition) as Property | WaterWorks | ElectricCompany | Railroad;
-
+        
             // Go to jail
             if (newPosition === 30) {
-                newState.players[currentPlayerIndex].position = 10;
-                newState.players[currentPlayerIndex].round = newState.currentRound;
+                currentPlayer.position = 10;
+                currentPlayer.round = newState.currentRound;
                 return newState;
             }
-
+        
             // Jail
-             if (newState.players[currentPlayerIndex].position === 10) {
+            if (currentPlayer.position === 10) {
                 if (!!(diceroll & 1)) {
-                    newState.players[currentPlayerIndex].position = newPosition;
+                    currentPlayer.position = newPosition;
                 }
-                newState.players[currentPlayerIndex].round = newState.currentRound;
+                currentPlayer.round = newState.currentRound;
                 return newState;
             }
-
-            //income tax
+        
+            // Income tax
             if (newPosition === 4) {
-                newState.players[currentPlayerIndex].money -= 200;
+                currentPlayer.position = newPosition;
+                currentPlayer.money -= 200;
+                console.log("You paid $200 for income tax");
+                currentPlayer.round = newState.currentRound;
                 return newState;
             }
-
-            //super tax
+        
+            // Super tax
             if (newPosition === 38) {
-                newState.players[currentPlayerIndex].money -= 300;
+                currentPlayer.position = newPosition;
+                currentPlayer.money -= 300;
+                console.log("You paid $300 for super tax");
+                currentPlayer.round = newState.currentRound;
                 return newState;
             }
-
-            //rent
+        
+            // Rent
             if (rentProperty && rentProperty.owner) {
                 const owner = newState.players.find(player => player.id === rentProperty.owner);
-
-                if (owner && owner.id !== action.player.id) {
-                    action.player.money -= rentProperty.rent;
+                if (owner && owner.id !== currentPlayer.id) {
+                    currentPlayer.money -= rentProperty.rent;
                     owner.money += rentProperty.rent;
-                    console.log(`${action.player.name} paid ${rentProperty.rent} to ${owner.name}`);
-                    return newState;
+                    console.log(`${currentPlayer.name} paid ${rentProperty.rent} to ${owner.name}`);
                 }
             }
-            newState.players[currentPlayerIndex].position = newPosition;
-            newState.players[currentPlayerIndex].round = newState.currentRound;
+        
+            currentPlayer.position = newPosition;
+            currentPlayer.round = newState.currentRound;
             return newState;
         }
             
