@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GameContext } from './../../types/GameProvider';
 import Styles from './GameBoardPage.module.css';
+import Styles2 from './HomePage.module.css';
 import { Player } from '../../types/Player';
 import { properties } from '../../types/data/Spaces';
 
@@ -63,12 +64,14 @@ const GameBoardPage: React.FC = () => {
 
 if (state.gameOver) { 
   return (
-    <div>
-      <h1>Game Over!</h1>
-      <p style={{fontSize: "23px", color: "white"}}>{currentPlayer.color} wins!</p>
-      <div>
+    <div className={Styles2["content-box"]}>
+      <h1 className={Styles2["warning-text"]}>Game Over!</h1>
+      <p style={{fontSize: "23px"}}>{currentPlayer.color} wins!</p>
+      <div className={Styles["flexed-items"]}>
         <button onClick={handleNewGame}>New Game</button>
-        <Link to="/">Back to Home</Link>
+        <div className={Styles2["btn--small"]}>
+          <Link style={{color: "black"}} to="/">Back to Home</Link>
+        </div>
       </div>
     </div>
   );
@@ -76,25 +79,27 @@ if (state.gameOver) {
 }
 
   return (
-    <div style={{ display: "flex", marginLeft: "-13rem"}}>
+    <div className={Styles["page-box"]}>
 
-      <div style={{display: "flex", flexDirection: "column", gap: "5px", marginTop: "3rem", minWidth: "103px"}}>
+      <div className={Styles["button-box"]}>
         <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}} onClick={handleDiceRoll}>Roll Dice</button>
         {isPurchasable && currentPlayer.money > currentSpace.price && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}}>Buy Property</button>}
         {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}}>Upgrade Property</button>)}
         <button onClick={handleEndTurn} style={{backgroundColor: currentPlayer.color, color: 'black'}}>End Turn</button>
-        <Link to="/">Back to Home</Link>
+        <div className={Styles2["btn--small"]}>
+          <Link style={{color: "black"}} to="/">Back to Home</Link>
+        </div>
       </div>
       {/*<pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>*/}
 
-<div style={{position: "absolute", display: "flex", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+<div className={Styles["player-info--box"]}>
         {state.players.map((player, index) => (
-          <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px'}}>
-            <p style={{fontSize: "16px", fontWeight: "bold"}}>Player: {player.color}</p>
-            <p style={{fontSize: "16px", fontWeight: "bold"}}>Money: {player.money}</p>
-            <p style={{fontSize: "16px", fontWeight: "bold"}}>Position: {player.position}</p>
-            <p style={{fontSize: "16px", fontWeight: "bold"}}>Round: {player.round}</p>
+          <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px', borderRadius: "0.5rem", border: "1px solid black"}}>
+            <p className={Styles["player-info--text"]}>Player: {player.color}</p>
+            <p className={Styles["player-info--text"]}>Money: {player.money}</p>
+            <p className={Styles["player-info--text"]}>Position: {player.position}</p>
+            <p className={Styles["player-info--text"]}>Round: {player.round}</p>
           </div>
         ))}
       </div>
