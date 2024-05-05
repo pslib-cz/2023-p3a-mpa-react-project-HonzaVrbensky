@@ -138,7 +138,7 @@ type Action = {
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
             if (propertyToBuy) {
                 if (!propertyToBuy.owner) {
-                    if (action.player.money >= propertyToBuy.price) { // Check if player has enough money
+                    if (action.player.money >= propertyToBuy.price) {
                         propertyToBuy.owner = action.player.id;
                         action.player.money -= propertyToBuy.price;
                         propertyToBuy.owner_color = action.player.color;
