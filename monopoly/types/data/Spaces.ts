@@ -1,5 +1,4 @@
 import { SpaceType, Property, Chance, CommunityChest, Go, Jail, FreeParking, Tax, GO_TO_JAIL, Railroad, WaterWorks, ElectricCompany} from "../GameBoard";
-import { Player } from "../Player";
 import { ChanceCards } from "./Chance";
 import { CommunityChests } from "./CommunityChests";
 

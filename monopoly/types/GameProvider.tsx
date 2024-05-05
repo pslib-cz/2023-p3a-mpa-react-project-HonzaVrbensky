@@ -1,4 +1,4 @@
-import react, { PropsWithChildren, createContext, useEffect, useReducer } from 'react';
+import { PropsWithChildren, createContext, useEffect, useReducer } from 'react';
 import { GameState } from './GameState';
 import { Player } from './Player';
 import { properties, chances, communityChests, jail, goToJail, freeParking, waterWorks, electricCompany, railroads, tax, go  } from './data/Spaces';
@@ -122,11 +122,10 @@ type Action = {
             // Rent
             if (rentProperty && rentProperty.owner) {
                 const owner = newState.players.find(player => player.id === rentProperty.owner);
-                if (owner && owner.id !== currentPlayer.id) {
+                if (owner) {
                     currentPlayer.money -= rentProperty.rent;
                     owner.money += rentProperty.rent;
                     console.log(`${currentPlayer.color} paid ${rentProperty.rent} to ${owner.color}`);
-                    return newState;
                 }
             }
         

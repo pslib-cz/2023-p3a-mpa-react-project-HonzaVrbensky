@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { createHashRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
 import GameBoardPage from './pages/GameBoardPage';
