@@ -14,9 +14,9 @@ export const GameContext = createContext<IGameContext>({} as IGameContext);
 const initialState: GameState = {
     gameOver: false,
     players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "Red"}, 
-              { id: 1, position: 0, name: "Player 2", money: 0, round: 0, color: "Blue"}, 
-              { id: 2, position: 0, name: "Player 3", money: 0, round: 0, color: "Green"}, 
-              { id: 3, position: 0, name: "Player 4", money: 0, round: 0, color: "Orange"},],
+              { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "Blue"}, 
+              { id: 2, position: 0, name: "Player 3", money: 1500, round: 0, color: "Green"}, 
+              { id: 3, position: 0, name: "Player 4", money: 1500, round: 0, color: "Orange"},],
     currentPlayerIndex: 0,
     currentRound: 1,
     gameBoard: {

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import './App.css'
-import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
+import { createHashRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
 import GameBoardPage from './pages/GameBoardPage';
 import HomePage from './pages/HomePage';
 
 function App() {
 
-  const router = createBrowserRouter(
+  const router = createHashRouter(
     createRoutesFromElements([
       <Route path="/" element={<HomePage />}/>,
       <Route path="/game" element={<GameBoardPage />}/>

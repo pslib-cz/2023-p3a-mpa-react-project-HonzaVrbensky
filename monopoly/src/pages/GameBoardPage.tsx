@@ -82,14 +82,16 @@ if (state.gameOver) {
     <div className={Styles["page-box"]}>
 
       <div className={Styles["button-box"]}>
-        <button style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}} onClick={handleDiceRoll}>Roll Dice</button>
+        <button style={{backgroundColor: currentPlayer.color, color: 'black', minWidth: "103px"}} onClick={handleDiceRoll}>Roll Dice</button>
         {isPurchasable && currentPlayer.money > currentSpace.price && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}}>Buy Property</button>}
         {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', marginRight: "5px", minWidth: "103px"}}>Upgrade Property</button>)}
         <button onClick={handleEndTurn} style={{backgroundColor: currentPlayer.color, color: 'black'}}>End Turn</button>
+       { <button onClick={handleNewGame} style={{backgroundColor: "grey", color: 'black', marginTop: "5px"}}>New Game</button>}
         <div className={Styles2["btn--small"]}>
           <Link style={{color: "black"}} to="/">Back to Home</Link>
         </div>
       </div>
+
       {/*<pre>{JSON.stringify(state.currentRound)}</pre>
       <pre>{JSON.stringify(state.players, null, 2)}</pre>*/}
 
