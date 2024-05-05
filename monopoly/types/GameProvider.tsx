@@ -118,7 +118,7 @@ type Action = {
                 currentPlayer.round = newState.currentRound;
                 return newState;
             }
-        
+
             // Rent
             if (rentProperty && rentProperty.owner) {
                 const owner = newState.players.find(player => player.id === rentProperty.owner);
