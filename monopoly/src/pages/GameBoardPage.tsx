@@ -27,7 +27,7 @@ const GameBoardPage: React.FC = () => {
       currentSpace.type === 'PROPERTY'
 
     ) {
-      dispatch({ type: 'UPGRADE_PROPERTY', player: currentPlayer, property: currentSpace });
+      dispatch({ type: 'UPGRADE_PROPERTY', player: {...currentPlayer}, property: {...currentSpace} });
     } else {
       console.log("You can't upgrade this space.");
     }
@@ -44,7 +44,7 @@ const GameBoardPage: React.FC = () => {
       currentSpace.type === 'WATER_WORKS') &&
       currentSpace.owner === undefined // Check if the property is not already owned
     ) {
-      dispatch({ type: 'BUY_PROPERTY', player: currentPlayer, property: currentSpace });
+      dispatch({ type: 'BUY_PROPERTY', player: {...currentPlayer}, property: {...currentSpace}});
     } else {
       console.log("You can't buy this space or it's already owned.");
     }

@@ -79,8 +79,6 @@ type Action = {
                 return newState;
             }
         
-            // Must add the "GO_TO_JAIL" and "JAIL"
-        
             const diceroll = Math.floor(Math.random() * 6) + 1;
             const newPosition = (currentPlayer.position + diceroll) % newState.gameBoard.spaces.length;
             const rentProperty = newState.gameBoard.spaces.find(space => space.id === newPosition) as Property | WaterWorks | ElectricCompany | Railroad;
@@ -120,12 +118,13 @@ type Action = {
             }
 
             // Rent
-            if (rentProperty && rentProperty.owner) {
+            if (rentProperty && rentProperty.owner !== currentPlayer.id) {
                 const owner = newState.players.find(player => player.id === rentProperty.owner);
                 if (owner) {
-                    currentPlayer.money -= rentProperty.rent;
-                    owner.money += rentProperty.rent;
-                    console.log(`${currentPlayer.color} paid ${rentProperty.rent} to ${owner.color}`);
+                    const rentAmount = rentProperty.rent;
+                    currentPlayer.money -= rentAmount;
+                    owner.money += rentAmount;
+                    console.log(`${currentPlayer.color} paid ${rentAmount} to ${owner.color}`);
                 }
             }
         
@@ -135,13 +134,14 @@ type Action = {
         }
             
         case 'BUY_PROPERTY': {
+            const currentPlayer = newState.players[newState.currentPlayerIndex];
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
             if (propertyToBuy) {
                 if (!propertyToBuy.owner) {
-                    if (action.player.money >= propertyToBuy.price) {
-                        propertyToBuy.owner = action.player.id;
-                        action.player.money -= propertyToBuy.price;
-                        propertyToBuy.owner_color = action.player.color;
+                    if (currentPlayer.money >= propertyToBuy.price) {
+                        propertyToBuy.owner = currentPlayer.id;
+                        currentPlayer.money -= propertyToBuy.price;
+                        propertyToBuy.owner_color = currentPlayer.color;
                     } else {
                         console.log("You don't have enough money to buy this property.");
                     }
@@ -151,15 +151,17 @@ type Action = {
             }
             return newState;
         }
+
         case 'UPGRADE_PROPERTY': { 
+            const currentPlayer = newState.players[newState.currentPlayerIndex];
             const propertyToUpgrade = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property;
             if (propertyToUpgrade) {
-                if (propertyToUpgrade.owner === action.player.id) {
-                    if (action.player.money >= propertyToUpgrade.price) { // Check if player has enough money
-                        if (propertyToUpgrade.upgrades < 4) { // Check if property can be upgraded
+                if (propertyToUpgrade.owner === currentPlayer.id) {
+                    if (currentPlayer.money >= propertyToUpgrade.price) {
+                        if (propertyToUpgrade.upgrades < 4) {
                             propertyToUpgrade.rent *= 2;
-                            action.player.money -= propertyToUpgrade.price;
-                            propertyToUpgrade.upgrades++; // Increment upgrade count
+                            currentPlayer.money -= propertyToUpgrade.price;
+                            propertyToUpgrade.upgrades++;
                         } else {
                             console.log("This property has reached its maximum upgrade limit.");
                         }
@@ -172,6 +174,7 @@ type Action = {
             }
             return newState;
         }
+
         case 'END_TURN':
 
         const currentPlayerIndex = newState.currentPlayerIndex;
@@ -212,7 +215,6 @@ type Action = {
  }
 
 export const GameProvider: React.FC<PropsWithChildren> = ({ children }) => {
-//    const [state, setState] = useState({ players: [], currentPlayer: 0 });
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -229,7 +231,6 @@ export const GameProvider: React.FC<PropsWithChildren> = ({ children }) => {
        localStorage.setItem('gameState', JSON.stringify(state)); 
      }, [state]);
 
-    //console.log(initialState);
     return (
         <GameContext.Provider value={{ state, dispatch }}>
             {children}
