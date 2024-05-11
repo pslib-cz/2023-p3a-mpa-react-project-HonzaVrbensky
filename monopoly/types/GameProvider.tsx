@@ -75,11 +75,11 @@ type Action = {
             const currentPlayerIndex = newState.currentPlayerIndex;
             const currentPlayer = newState.players[currentPlayerIndex];
             console.log(`${currentPlayer.color} rolled the dice.`);
-            state.message = `${currentPlayer.color} rolled the dice.`;
+            newState.message = `${currentPlayer.color} rolled the dice.`;
         
             if (currentPlayer.round === newState.currentRound) {
                 console.log("You have already rolled the dice in this round.");
-                state.message = "You have already rolled the dice in this round.";
+                newState.message = "You have already rolled the dice in this round.";
                 return newState;
             }
         
@@ -91,7 +91,7 @@ type Action = {
             if (newPosition === 30) {
                 currentPlayer.position = 10;
                 currentPlayer.round = newState.currentRound;
-                state.message = "You go to Jail!";
+                newState.message = "You go to Jail!";
                 return newState;
             }
         
@@ -101,7 +101,7 @@ type Action = {
                     currentPlayer.position = newPosition;
                 }
                 currentPlayer.round = newState.currentRound;
-                state.message = "You are in Jail!";
+                newState.message = "You are in Jail!";
                 return newState;
             }
         
@@ -111,7 +111,7 @@ type Action = {
                 currentPlayer.money -= 200;
                 console.log("You paid $200 for income tax");
 
-                state.message = "You paid $200 for income tax";
+                newState.message = "You paid $200 for income tax";
                 currentPlayer.round = newState.currentRound;
                 return newState;
             }
@@ -122,7 +122,7 @@ type Action = {
                 currentPlayer.money -= 300;
                 console.log("You paid $300 for super tax");
 
-                state.message = "You paid $300 for super tax";
+                newState.message = "You paid $300 for super tax";
                 currentPlayer.round = newState.currentRound;
                 return newState;
             }
@@ -135,7 +135,7 @@ type Action = {
                     currentPlayer.money -= rentAmount;
                     owner.money += rentAmount;
                     console.log(`${currentPlayer.color} paid ${rentAmount} to ${owner.color}`);
-                    state.message = `${currentPlayer.color} paid ${rentAmount} to ${owner.color}`;
+                    newState.message = `${currentPlayer.color} paid ${rentAmount} to ${owner.color}`;
                 }
             }
         
@@ -157,11 +157,11 @@ type Action = {
                         state.message = `${currentPlayer.color} bought ${propertyToBuy.name}`;
                     } else {
                         console.log("You don't have enough money to buy this property.");
-                        state.message = "You don't have enough money to buy this property.";
+                        newState.message = "You don't have enough money to buy this property.";
                     }
                 } else {
                     console.log("This property is already owned.");
-                    state.message = "This property is already owned.";
+                    newState.message = "This property is already owned.";
                 }
             }
             return newState;
@@ -228,7 +228,6 @@ type Action = {
 
         case 'NEW_GAME':
             console.log("New game started.");
-            state.message = "Start game by rolling the dice.";
             return initialState;
         default:
             return state;
