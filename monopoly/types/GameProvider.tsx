@@ -6,12 +6,13 @@ import { ElectricCompany, Property, WaterWorks, Railroad  } from './GameBoard';
 
 interface IGameContext {
     state: GameState;
-    dispatch: (action: Action) => void; 
+    dispatch: (action: Action) => void;
 }
 
 export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
+    message: "Start game by rolling the dice.",
     gameOver: false,
     players: [{ id: 0, position: 0, name: "Player 1", money: 1500, round: 0, color: "Red"}, 
               { id: 1, position: 0, name: "Player 2", money: 1500, round: 0, color: "Blue"}, 
@@ -73,9 +74,12 @@ type Action = {
         case 'DICEROLL': {
             const currentPlayerIndex = newState.currentPlayerIndex;
             const currentPlayer = newState.players[currentPlayerIndex];
+            console.log(`${currentPlayer.color} rolled the dice.`);
+            state.message = `${currentPlayer.color} rolled the dice.`;
         
             if (currentPlayer.round === newState.currentRound) {
                 console.log("You have already rolled the dice in this round.");
+                state.message = "You have already rolled the dice in this round.";
                 return newState;
             }
         
@@ -87,6 +91,7 @@ type Action = {
             if (newPosition === 30) {
                 currentPlayer.position = 10;
                 currentPlayer.round = newState.currentRound;
+                state.message = "You go to Jail!";
                 return newState;
             }
         
@@ -96,6 +101,7 @@ type Action = {
                     currentPlayer.position = newPosition;
                 }
                 currentPlayer.round = newState.currentRound;
+                state.message = "You are in Jail!";
                 return newState;
             }
         
@@ -104,6 +110,8 @@ type Action = {
                 currentPlayer.position = newPosition;
                 currentPlayer.money -= 200;
                 console.log("You paid $200 for income tax");
+
+                state.message = "You paid $200 for income tax";
                 currentPlayer.round = newState.currentRound;
                 return newState;
             }
@@ -113,6 +121,8 @@ type Action = {
                 currentPlayer.position = newPosition;
                 currentPlayer.money -= 300;
                 console.log("You paid $300 for super tax");
+
+                state.message = "You paid $300 for super tax";
                 currentPlayer.round = newState.currentRound;
                 return newState;
             }
@@ -125,6 +135,7 @@ type Action = {
                     currentPlayer.money -= rentAmount;
                     owner.money += rentAmount;
                     console.log(`${currentPlayer.color} paid ${rentAmount} to ${owner.color}`);
+                    state.message = `${currentPlayer.color} paid ${rentAmount} to ${owner.color}`;
                 }
             }
         
@@ -136,17 +147,21 @@ type Action = {
         case 'BUY_PROPERTY': {
             const currentPlayer = newState.players[newState.currentPlayerIndex];
             const propertyToBuy = newState.gameBoard.spaces.find(space => space.id === action.property.id) as Property | WaterWorks | ElectricCompany | Railroad;
+
             if (propertyToBuy) {
                 if (!propertyToBuy.owner) {
                     if (currentPlayer.money >= propertyToBuy.price) {
                         propertyToBuy.owner = currentPlayer.id;
                         currentPlayer.money -= propertyToBuy.price;
                         propertyToBuy.owner_color = currentPlayer.color;
+                        state.message = `${currentPlayer.color} bought ${propertyToBuy.name}`;
                     } else {
                         console.log("You don't have enough money to buy this property.");
+                        state.message = "You don't have enough money to buy this property.";
                     }
                 } else {
                     console.log("This property is already owned.");
+                    state.message = "This property is already owned.";
                 }
             }
             return newState;
@@ -162,6 +177,7 @@ type Action = {
                             propertyToUpgrade.rent *= 2;
                             currentPlayer.money -= propertyToUpgrade.price;
                             propertyToUpgrade.upgrades++;
+                            state.message = `${currentPlayer.color} upgraded ${propertyToUpgrade.name}`;
                         } else {
                             console.log("This property has reached its maximum upgrade limit.");
                         }
@@ -178,6 +194,8 @@ type Action = {
         case 'END_TURN':
 
         const currentPlayerIndex = newState.currentPlayerIndex;
+        const currentPlayer = newState.players[currentPlayerIndex];
+
             newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
             if (newState.currentPlayerIndex === 0) {
                 newState.currentRound++;
@@ -190,6 +208,7 @@ type Action = {
                     newState.currentPlayerIndex = 0; // Reset to first player if last player was removed
                 }
                 console.log(`${action.player.name} has been removed from the game.`);
+                state.message = `${currentPlayer.color} has been removed from the game.`;
                 return newState;
             }
 
@@ -208,6 +227,8 @@ type Action = {
             return action.gameState;
 
         case 'NEW_GAME':
+            console.log("New game started.");
+            state.message = "Start game by rolling the dice.";
             return initialState;
         default:
             return state;

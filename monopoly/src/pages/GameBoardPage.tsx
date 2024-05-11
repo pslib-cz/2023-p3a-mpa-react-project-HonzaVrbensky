@@ -79,6 +79,7 @@ if (state.gameOver) {
   return (
     <div className={Styles["page-box"]}>
 
+
       <div className={Styles["button-box"]}>
         <button style={{backgroundColor: currentPlayer.color, color: 'black', minWidth: "103px"}} onClick={handleDiceRoll}>Roll Dice</button>
         {isPurchasable && currentPlayer.money > currentSpace.price && currentSpace.owner == undefined && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', minWidth: "103px"}}>Buy Property</button>}
@@ -88,6 +89,10 @@ if (state.gameOver) {
         <div className={Styles2["btn--small"]}>
           <Link style={{color: "black"}} to="/">Back to Home</Link>
         </div>
+      </div>
+
+      <div className={Styles["message-box"]}>
+        <p className={Styles["player-info--text"]}>{state.message}</p>
       </div>
 
 <div className={Styles["player-info--box"]}>
@@ -100,7 +105,6 @@ if (state.gameOver) {
           </div>
         ))}
       </div>
-
       <div className={Styles["gameboard"]}>
 
         {state.gameBoard.spaces.map((space, index) => (

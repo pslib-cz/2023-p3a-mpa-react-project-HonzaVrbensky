@@ -7,4 +7,5 @@ export interface GameState {
   currentRound: number;
   gameBoard: GameBoard;
   gameOver: boolean;
+  message: string;
 }
