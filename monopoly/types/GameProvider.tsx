@@ -154,7 +154,7 @@ type Action = {
                         propertyToBuy.owner = currentPlayer.id;
                         currentPlayer.money -= propertyToBuy.price;
                         propertyToBuy.owner_color = currentPlayer.color;
-                        state.message = `${currentPlayer.color} bought ${propertyToBuy.name}`;
+                        newState.message = `${currentPlayer.color} bought ${propertyToBuy.name}`;
                     } else {
                         console.log("You don't have enough money to buy this property.");
                         newState.message = "You don't have enough money to buy this property.";
@@ -177,7 +177,7 @@ type Action = {
                             propertyToUpgrade.rent *= 2;
                             currentPlayer.money -= propertyToUpgrade.price;
                             propertyToUpgrade.upgrades++;
-                            state.message = `${currentPlayer.color} upgraded ${propertyToUpgrade.name}`;
+                            newState.message = `${currentPlayer.color} upgraded ${propertyToUpgrade.name}`;
                         } else {
                             console.log("This property has reached its maximum upgrade limit.");
                         }
@@ -208,7 +208,7 @@ type Action = {
                     newState.currentPlayerIndex = 0; // Reset to first player if last player was removed
                 }
                 console.log(`${action.player.name} has been removed from the game.`);
-                state.message = `${currentPlayer.color} has been removed from the game.`;
+                newState.message = `${currentPlayer.color} has been removed from the game.`;
                 return newState;
             }
 
