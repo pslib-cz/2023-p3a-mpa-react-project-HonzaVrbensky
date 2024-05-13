@@ -135,7 +135,7 @@ type Action = {
                     currentPlayer.money -= rentAmount;
                     owner.money += rentAmount;
                     console.log(`${currentPlayer.color} paid ${rentAmount} to ${owner.color}`);
-                    newState.message = `${currentPlayer.color} paid ${rentAmount} to ${owner.color}`;
+                    newState.message = `${currentPlayer.color} paid $${rentAmount} to ${owner.color}`;
                 }
             }
         

@@ -102,7 +102,7 @@ if (state.gameOver) {
         {state.players.map((player, index) => (
           <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px', borderRadius: "0.5rem", border: "1px solid black"}}>
             <p className={Styles["player-info--text"]}>Player: {player.color}</p>
-            <p className={Styles["player-info--text"]}>Money: {player.money}</p>
+            <p className={Styles["player-info--text"]}>Money: {player.money} $</p>
             <p className={Styles["player-info--text"]}>Position: {player.position}</p>
             <p className={Styles["player-info--text"]}>Round: {player.round}</p>
           </div>
