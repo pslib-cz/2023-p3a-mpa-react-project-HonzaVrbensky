@@ -9,6 +9,10 @@ const HomePage: React.FC = () => {
       <div className={Styles["btn"]}>
         <Link style={{color: "black"}} to="/game">Start Game</Link>
       </div>
+
+      <div className={Styles["btn"]}>
+        <Link style={{color: "black"}} to="/tutorial">Tutorial</Link>
+      </div>
     </div>
   );
 }
