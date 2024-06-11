@@ -40,3 +40,19 @@ h1, p {
     border-radius: 0.5rem;  
     max-width: 7rem;
 }
+
+
+@media(max-width: 1700px) {
+    html{
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 1600px) {
+    html{
+        font-size: 11px;
+    }
+    .gameboard{
+        grid-template-columns: repeat(13, .5fr);
+    }
+}

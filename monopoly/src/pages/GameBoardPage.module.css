@@ -52,12 +52,18 @@ p {
 }
 
 .message-box {
-    position: absolute; 
-    display: flex; 
-    top: 35%; 
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /*transform: translate(-50%, -50%);*/
+    grid-column: 6 / 8 ;
+    grid-row: 3;
   }
+
+.message-player-info {
+    display: flex;
+    flex-direction: column;
+    grid-column: 3 / 12;
+    grid-row:  2 / 11;
+    padding: 1em;
+}
 
 .player-info--text {
   font-size: 16px;
@@ -313,4 +319,19 @@ p {
     max-height: 8rem;
     align-items: center;
     background: linear-gradient(90deg, royalblue 17%, #f9f9f9 1%);
+}
+
+@media(max-width: 1700px) {
+    html{
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 1600px) {
+    html{
+        font-size: 11px;
+    }
+    .gameboard{
+        grid-template-columns: repeat(13, .5fr);
+    }
 }

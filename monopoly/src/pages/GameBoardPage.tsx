@@ -88,26 +88,12 @@ if (state.gameOver) {
         {isPurchasable && currentPlayer.money > currentSpace.price && currentSpace.owner == undefined && <button onClick={handleBuyProperty} style={{backgroundColor: currentPlayer.color, color: 'black', minWidth: "103px"}}>Buy Property</button>}
         {isPurchasable && isUpgradable && currentSpace.owner == currentPlayer.id && currentSpace.upgrades < 4 &&  (<button onClick={handleUpgradeProperty} style={{backgroundColor: currentPlayer.color, color: 'black', minWidth: "103px"}}>Upgrade Property</button>)}
         {diceRolled == true  && <button onClick={handleEndTurn} style={{backgroundColor: currentPlayer.color, color: 'black'}}>End Turn</button>}
-        {<button onClick={handleNewGame} style={{backgroundColor: "grey", color: 'black', marginTop: "5px"}}>New Game</button>}
         <div className={Styles2["btn--small"]}>
           <Link style={{color: "black"}} to="/">Back to Home</Link>
         </div>
+        {<button onClick={handleNewGame} style={{backgroundColor: "grey", color: 'black', marginTop: "5px"}}>New Game</button>}
       </div>
 
-      <div className={Styles["message-box"]}>
-        <p className={Styles["player-info--text"]}>{state.message}</p>
-      </div>
-
-<div className={Styles["player-info--box"]}>
-        {state.players.map((player, index) => (
-          <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px', borderRadius: "0.5rem", border: "1px solid black"}}>
-            <p className={Styles["player-info--text"]}>Player: {player.color}</p>
-            <p className={Styles["player-info--text"]}>Money: {player.money} $</p>
-            <p className={Styles["player-info--text"]}>Position: {player.position}</p>
-            <p className={Styles["player-info--text"]}>Round: {player.round}</p>
-          </div>
-        ))}
-      </div>
       <div className={Styles["gameboard"]}>
 
         {state.gameBoard.spaces.map((space, index) => (
@@ -186,6 +172,21 @@ if (state.gameOver) {
             )}
           </div>
         ))}
+<div className={Styles["message-player-info"]}>
+<div className={Styles["player-info--box"]}>
+        {state.players.map((player, index) => (
+          <div key={index} style={{backgroundColor: player.color, padding: '10px', margin: '10px', borderRadius: "0.5rem", border: "1px solid black"}}>
+            <p className={Styles["player-info--text"]}>Player: {player.color}</p>
+            <p className={Styles["player-info--text"]}>Money: {player.money} $</p>
+            <p className={Styles["player-info--text"]}>Position: {player.position}</p>
+            <p className={Styles["player-info--text"]}>Round: {player.round}</p>
+          </div>
+        ))}
+      </div>
+      <div className={Styles["message-box"]}>
+        <p className={Styles["player-info--text"]}>{state.message}</p>
+      </div>
+      </div>
       </div>
     </div>
   );
