@@ -1,13 +1,13 @@
-# Název mého projektu, programu, hry...
+# Monopoly
 
 ## Téma
 
-Tady bude krátký a úderný popis o účelu, významu, funkcionalitě...
+Jde o klasickou hru Monopoly, kterou všichni známe.
 
 ## Odkazy pro vývoj
 
 Zde budou živé linky na:
-- figma návrh stránek aplikace
+- [figma](https://www.figma.com/file/xmDpDMctBAYlqnJWClAKyS/Monopoly?type=design&node-id=0-1&mode=design&t=brz6Ylbf54y3wjs3-0) návrh stránek aplikace
 - odkaz na gh-pages projektu
 - odkaz do repozitáře projektu, pokud pracuji v teamu a zde vývoj neprobíhá
 

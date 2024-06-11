@@ -1,0 +1,58 @@
+.content-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding-block: 5rem;
+    padding-inline: 5rem;
+    box-shadow: 4px 8px #DCDCDC;
+}
+
+h1, p {
+    color: black;
+}
+
+.warning-text {
+    color: red;
+}
+
+.btn {
+    font-size: 20px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    background-color: #646cff;
+    color: black;
+    border: none;
+    border-radius: 0.5rem;  
+    max-width: 7rem;
+}
+
+.btn--small {
+    font-size: 16px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    background-color: #646cff;
+    color: black;
+    border: none;
+    border-radius: 0.5rem;  
+    max-width: 7rem;
+}
+
+
+@media(max-width: 1700px) {
+    html{
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 1600px) {
+    html{
+        font-size: 11px;
+    }
+    .gameboard{
+        grid-template-columns: repeat(13, .5fr);
+    }
+}
